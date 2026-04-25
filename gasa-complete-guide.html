@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GASA 2026 · 生命科学入门指南 | 从基因到生命</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: #0a0a0f; color: #e8e8ed; line-height: 1.8;
+        }
+        .hero {
+            background: linear-gradient(135deg, #0a1128 0%, #1a1a3e 50%, #0d2137 100%);
+            padding: 80px 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(100,100,255,0.2);
+        }
+        .hero h1 {
+            font-size: 2.4em; color: #fff; margin-bottom: 15px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p { color: #a0a0c0; font-size: 1.1em; max-width: 600px; margin: 0 auto; }
+        .tagline {
+            display: inline-block;
+            background: rgba(102,126,234,0.15);
+            border: 1px solid rgba(102,126,234,0.3);
+            padding: 8px 20px; border-radius: 20px;
+            margin-top: 25px; color: #8898ff; font-size: 0.9em;
+        }
+        
+        .toc {
+            max-width: 900px; margin: 40px auto; padding: 0 20px;
+        }
+        .toc h2 { 
+            color: #667eea; font-size: 1.4em; margin-bottom: 20px;
+            padding-bottom: 10px; border-bottom: 1px solid rgba(102,126,234,0.3);
+        }
+        .toc-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .toc-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px; padding: 18px;
+            transition: all 0.3s;
+        }
+        .toc-item:hover {
+            background: rgba(102,126,234,0.1);
+            border-color: rgba(102,126,234,0.4);
+        }
+        .toc-item .num { 
+            color: #667eea; font-size: 1.8em; font-weight: 700;
+        }
+        .toc-item .name { color: #fff; font-size: 1.1em; margin: 5px 0; }
+        .toc-item .topic { color: #a0a0c0; font-size: 0.85em; }
+        .toc-item .metaphor { 
+            color: #ffa07a; font-size: 0.8em; margin-top: 8px;
+            font-style: italic;
+        }
+        
+        .section {
+            max-width: 900px; margin: 50px auto; padding: 0 20px;
+        }
+        .section-header {
+            display: flex; align-items: center; gap: 15px;
+            margin-bottom: 30px;
+        }
+        .section-num {
+            width: 50px; height: 50px; border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4em; font-weight: 700; color: #fff;
+        }
+        .section-title h2 { color: #fff; font-size: 1.5em; }
+        .section-title .subtitle { color: #a0a0c0; font-size: 0.9em; }
+        
+        .card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px; padding: 30px;
+            margin-bottom: 25px;
+        }
+        .card h3 { 
+            color: #fff; font-size: 1.2em; margin-bottom: 15px;
+            display: flex; align-items: center; gap: 10px;
+        }
+        .card h3 .emoji { font-size: 1.3em; }
+        .card p { color: #c0c0d0; margin-bottom: 15px; }
+        
+        .big-metaphor {
+            background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1));
+            border: 1px solid rgba(102,126,234,0.3);
+            border-radius: 12px; padding: 25px;
+            margin: 20px 0;
+        }
+        .big-metaphor .label {
+            color: #667eea; font-size: 0.85em; text-transform: uppercase;
+            letter-spacing: 1px; margin-bottom: 10px;
+        }
+        .big-metaphor .content {
+            color: #fff; font-size: 1.2em; line-height: 1.6;
+        }
+        
+        .concept-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px; margin: 20px 0;
+        }
+        .concept-item {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px; padding: 15px;
+            text-align: center;
+        }
+        .concept-item .icon { font-size: 2em; margin-bottom: 8px; }
+        .concept-item .name { color: #fff; font-size: 1em; }
+        .concept-item .desc { color: #a0a0c0; font-size: 0.8em; margin-top: 5px; }
+        
+        .highlight-box {
+            background: rgba(255,160,122,0.1);
+            border-left: 4px solid #ffa07a;
+            padding: 20px; margin: 20px 0;
+            border-radius: 0 12px 12px 0;
+        }
+        .highlight-box .title { color: #ffa07a; font-weight: 600; margin-bottom: 10px; }
+        .highlight-box p { color: #e8e8ed; }
+        
+        .key-point {
+            display: flex; gap: 15px; margin: 15px 0;
+            align-items: flex-start;
+        }
+        .key-point .bullet {
+            width: 24px; height: 24px; border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8em; flex-shrink: 0; margin-top: 3px;
+        }
+        .key-point p { color: #c0c0d0; }
+        
+        .timeline {
+            position: relative; padding-left: 30px;
+            border-left: 2px solid rgba(102,126,234,0.3);
+            margin: 20px 0;
+        }
+        .timeline-item {
+            position: relative; margin-bottom: 25px;
+        }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -36px; top: 0;
+            width: 12px; height: 12px; border-radius: 50%;
+            background: #667eea;
+        }
+        .timeline-item .year {
+            color: #667eea; font-size: 0.85em; font-weight: 600;
+        }
+        .timeline-item .event { color: #e8e8ed; margin-top: 3px; }
+        
+        .quote {
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px; padding: 25px;
+            margin: 20px 0;
+            font-style: italic; color: #a0a0c0;
+            border-left: 3px solid #667eea;
+        }
+        .quote .author { 
+            color: #667eea; font-style: normal; 
+            margin-top: 10px; font-size: 0.9em;
+        }
+        
+        .comparison-table {
+            width: 100%; border-collapse: collapse; margin: 20px 0;
+        }
+        .comparison-table th, .comparison-table td {
+            padding: 12px 15px; text-align: left;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .comparison-table th { 
+            background: rgba(102,126,234,0.2); color: #fff;
+        }
+        .comparison-table td { color: #c0c0d0; }
+        
+        .network-diagram {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px; padding: 40px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        .network-title {
+            color: #667eea; font-size: 1.1em; margin-bottom: 30px;
+        }
+        .network-layers {
+            display: flex; justify-content: center;
+            align-items: center; flex-wrap: wrap; gap: 20px;
+        }
+        .layer {
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+        }
+        .layer-label {
+            color: #a0a0c0; font-size: 0.8em; text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .layer-items {
+            display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+        }
+        .node {
+            background: linear-gradient(135deg, rgba(102,126,234,0.3), rgba(118,75,162,0.3));
+            border: 1px solid rgba(102,126,234,0.5);
+            border-radius: 20px; padding: 8px 15px;
+            color: #fff; font-size: 0.85em;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .node:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transform: scale(1.05);
+        }
+        .layer-connection {
+            display: flex; flex-direction: column; align-items: center;
+            color: #667eea; font-size: 1.5em;
+        }
+        
+        .footer {
+            text-align: center; padding: 50px 20px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 80px;
+        }
+        .footer p { color: #606080; font-size: 0.9em; }
+        
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.6em; }
+            .card { padding: 20px; }
+            .comparison-table { font-size: 0.85em; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <h1>🧬 生命科学入门指南</h1>
+    <p>GASA Boston-NYC 2026 · 九位科学家带你从基因认识生命</p>
+    <span class="tagline">通俗比喻 · 快速理解 · 过目不忘</span>
+</div>
+
+<!-- 目录导航 -->
+<div class="toc">
+    <h2>📚 课程导航</h2>
+    <div class="toc-grid">
+        <div class="toc-item" onclick="scrollToSection('sec1')">
+            <div class="num">01</div>
+            <div class="name">Jeffrey Friedman</div>
+            <div class="topic">Leptin · 肥胖的生物学</div>
+            <div class="metaphor">🔦 身体的烟雾报警器</div>
+        </div>
+        <div class="toc-item" onclick="scrollToSection('sec2')">
+            <div class="num">02</div>
+            <div class="name">Robert Desimone</div>
+            <div class="topic">Attention · 注意力网络</div>
+            <div class="metaphor">🔦 大脑的聚光灯</div>
+        </div>
+        <div class="toc-item" onclick="scrollToSection('sec3')">
+            <div class="num">03</div>
+            <div class="name">林希虹</div>
+            <div class="topic">AI · 基因组统计</div>
+            <div class="metaphor">📊 城市规划AI</div>
+        </div>
+        <div class="toc-item" onclick="scrollToSection('sec4')">
+            <div class="num">04</div>
+            <div class="name">Robert Langer</div>
+            <div class="topic">药物递送 · 纳米医学</div>
+            <div class="metaphor">📦 GPS快递系统</div>
+        </div>
+        <div class="toc-item" onclick="scrollToSection('sec5')">
+            <div class="num">05</div>
+            <div class="name">Morgan Sheng</div>
+            <div class="topic">Synapses · 神经突触</div>
+            <div class="metaphor">🔌 网线接口</div>
+        </div>
+        <div class="toc-item" onclick="scrollToSection('sec6')">
+            <div class="num">06</div>
+            <div class="name">Luciano Marraffini</div>
+            <div class="topic">CRISPR · 基因编辑</div>
+            <div class="metaphor">✂️ Word查找替换</div>
+        </div>
+        <div class="toc-item" onclick="scrollToSection('sec7')">
+            <div class="num">07</div>
+            <div class="name">Gary Ruvkun</div>
+            <div class="topic">microRNA · 发育时序</div>
+            <div class="metaphor">⏰ 生命的定时器</div>
+        </div>
+        <div class="toc-item" onclick="scrollToSection('sec8')">
+            <div class="num">08</div>
+            <div class="name">David Ho</div>
+            <div class="topic">HIV · 艾滋病</div>
+            <div class="metaphor">🦠 狡猾的间谍</div>
+        </div>
+        <div class="toc-item" onclick="scrollToSection('sec9')">
+            <div class="num">09</div>
+            <div class="name">林海帆</div>
+            <div class="topic">Stem Cells · 干细胞</div>
+            <div class="metaphor">🌱 生命的种子</div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 第一章：Leptin ========== -->
+<div class="section" id="sec1">
+    <div class="section-header">
+        <div class="section-num">1</div>
+        <div class="section-title">
+            <h2>Jeffrey Friedman · Leptin与肥胖的生物学</h2>
+            <div class="subtitle">洛克菲勒大学 · 1994年发现Leptin</div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3><span class="emoji">🔦</span> 一句话理解</h3>
+        <p><strong>Leptin = 身体的"烟雾报警器"</strong></p>
+        <p>脂肪细胞会产生Leptin（瘦素），告诉大脑"我吃饱了，别再吃了"。肥胖的人，这个报警器失灵了——即使脂肪很多，大脑也听不见信号。</p>
+        
+        <div class="big-metaphor">
+            <div class="label">🏠 通俗比喻</div>
+            <div class="content">
+                想象你的身体是一辆车，脂肪 = 油箱里的油。<br>
+                Leptin = 油量表，向大脑报告还剩多少油。<br>
+                <strong>肥胖 = 油量表坏了</strong>，明明油已经满了，但仪表盘还显示"请加油"，所以大脑一直让你吃吃吃。
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3><span class="emoji">🧬</span> 核心知识点</h3>
+        
+        <div class="key-point">
+            <div class="bullet">1</div>
+            <p><strong>Leptin的发现（1994）</strong>：Friedman在洛克菲勒大学发现，ob/ob小鼠之所以肥胖，是因为它们无法产生Leptin。这是一个里程碑——证明了肥胖是生物学疾病，不是"意志力薄弱"。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">2</div>
+            <p><strong>VMH（丘脑腹内侧核）</strong>：大脑的"饥饿总部"。损伤VMH → 暴饮暴食 → 肥胖。这证明饥饿不是心理问题，而是有明确的神经解剖位置。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">3</div>
+            <p><strong>Leptin抵抗</strong>：大多数肥胖者不是缺乏Leptin，而是大脑对Leptin不敏感。就像长期吸入煤气，嗅觉失灵，闻不到泄漏。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">4</div>
+            <p><strong>Incretin类药物（GLP-1）</strong>：Ozempic、Mounjaro等新药可以绕过Leptin抵抗，直接抑制食欲。但有副作用（恶心、胃瘫、自杀风险），且停药后体重会反弹。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">5</div>
+            <p><strong>运动与睡眠</strong>：睡眠不足会降低Leptin、增加ghrelin（饥饿激素），让你第二天更饿。运动减肥效果有限，因为身体会代偿。</p>
+        </div>
+    </div>
+    
+    <div class="highlight-box">
+        <div class="title">💡 关键洞察</div>
+        <p>Friedman的工作颠覆了一个偏见：肥胖不是性格缺陷，而是有明确的分子机制。这为GLP-1药物（如司美格鲁肽）奠定了理论基础——现在这些药物市场规模已达$150B。</p>
+    </div>
+    
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="year">1950s</div>
+            <div class="event">科学家发现ob/ob小鼠——基因突变导致肥胖</div>
+        </div>
+        <div class="timeline-item">
+            <div class="year">1994</div>
+            <div class="event">Friedman克隆ob基因，发现Leptin</div>
+        </div>
+        <div class="timeline-item">
+            <div class="year">1995-1996</div>
+            <div class="event">Leptin受体发现，信号通路阐明</div>
+        </div>
+        <div class="timeline-item">
+            <div class="year">2021-2024</div>
+            <div class="event">GLP-1药物（Ozempic/Wegovy/Mounjaro）爆红</div>
+        </div>
+    </div>
+    
+    <div class="quote">
+        "脂肪不只是储存能量的地方，它是一个内分泌器官，会说话。"
+        <div class="author">— Jeffrey Friedman</div>
+    </div>
+</div>
+
+<!-- ========== 第二章：Desimone ========== -->
+<div class="section" id="sec2">
+    <div class="section-header">
+        <div class="section-num">2</div>
+        <div class="section-title">
+            <h2>Robert Desimone · 注意力与神经科学未来</h2>
+            <div class="subtitle">MIT McGovern Institute · 大脑的聚光灯</div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3><span class="emoji">🔦</span> 一句话理解</h3>
+        <p><strong>注意力 = 大脑的"聚光灯"</strong></p>
+        <p>在嘈杂的房间里，聚光灯照到哪里，你就能看清什么、听到什么。注意力就是大脑选择"看谁、听谁、想什么"的机制。</p>
+        
+        <div class="big-metaphor">
+            <div class="label">🎪 通俗比喻</div>
+            <div class="content">
+                想象你在一个有很多人的派对上聊天。<br>
+                你的注意力 = 主持人手里的聚光灯，<br>
+                当聚光灯照向某个人，你就能听清他说什么。<br>
+                <strong>聚光灯照到的地方 = 增强信号；其他人的声音 = 噪音抑制</strong>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3><span class="emoji">🧠</span> 核心知识点</h3>
+        
+        <div class="key-point">
+            <div class="bullet">1</div>
+            <p><strong>What vs Where通路</strong>：大脑处理视觉信息有两条路。腹侧通路（What）= "这是什么？"；背侧通路（Where）= "它在哪里？"。这是深度学习CNN的生物学原型。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">2</div>
+            <p><strong>前额叶（Prefrontal Cortex）</strong>：注意力的"指挥官"，负责自上而下地控制聚焦目标。就像乐队的指挥，决定谁solo。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">3</div>
+            <p><strong>Gamma振荡（40Hz）</strong>：神经元同步放电的频率，被认为是"注意力的脑电波"。Feng Zhang用mRNA在老年小鼠肝脏中表达三种因子，恢复T细胞功能，间接改善免疫衰老相关的注意力下降。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">4</div>
+            <p><strong>注意力障碍</strong>：ADHD、老年痴呆、精神分裂症都与注意力网络失调有关。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">5</div>
+            <p><strong>AI的启发</strong>：深度学习中的"注意力机制"直接受Desimone对猕猴视觉系统的研究启发。Transformer架构的核心就是"注意力"。</p>
+        </div>
+    </div>
+    
+    <div class="highlight-box">
+        <div class="title">🚀 神经科学的未来方向</div>
+        <p>Desimone提到的四大方向：</p>
+        <div class="concept-grid">
+            <div class="concept-item">
+                <div class="icon">🧬</div>
+                <div class="name">基因工具革命</div>
+                <div class="desc">CRISPR、光遗传学操控神经回路</div>
+            </div>
+            <div class="concept-item">
+                <div class="icon">🤖</div>
+                <div class="name">脑机接口</div>
+                <div class="desc">Neuralink等公司读取/写入神经信号</div>
+            </div>
+            <div class="concept-item">
+                <div class="icon">🎯</div>
+                <div class="name">精准医疗</div>
+                <div class="desc">根据神经回路差异定制治疗</div>
+            </div>
+            <div class="concept-item">
+                <div class="icon">🌌</div>
+                <div class="name">超越身体极限</div>
+                <div class="desc">记忆存储、意识上传</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="quote">
+        "我们研究的不只是大脑如何工作，而是意识如何涌现。"
+        <div class="author">— Robert Desimone, MIT McGovern Institute</div>
+    </div>
+</div>
+
+<!-- ========== 第三章：林希虹 ========== -->
+<div class="section" id="sec3">
+    <div class="section-header">
+        <div class="section-num">3</div>
+        <div class="section-title">
+            <h2>林希虹 · AI+统计学赋能基因组医学</h2>
+            <div class="subtitle">哈佛大学 · 用大数据预测健康</div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3><span class="emoji">🔦</span> 一句话理解</h3>
+        <p><strong>PRS = 基因版的"信用评分"</strong></p>
+        <p>银行根据你的信用记录打分，决定给你多少贷款。PRS（多基因风险评分）根据你的基因，给你的健康风险打分——预测你未来会不会得糖尿病、心脏病。</p>
+        
+        <div class="big-metaphor">
+            <div class="label">🏙️ 通俗比喻</div>
+            <div class="content">
+                基因组数据 = 一张超详细的"城市地图"<br>
+                AI统计学 = 城市规划AI<br>
+                <strong>用途</strong>：预测哪里会"堵车"（疾病风险），提前"疏导"（预防干预）<br>
+                <br>
+                想象你拿到一张GPS地图，AI能预测：<br>
+                → 这条路5年后会不会堵？<br>
+                → 这片区域犯罪率会上升吗？<br>
+                → 在哪里建医院最合适？
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3><span class="emoji">📊</span> 核心知识点</h3>
+        
+        <div class="key-point">
+            <div class="bullet">WGS</div>
+            <p><strong>WGS（全基因组测序）</strong>：读取你完整的30亿个DNA字母。就像把整本书一字不漏地抄下来，而不是只查关键词。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">PRS</div>
+            <p><strong>PRS（多基因风险评分）</strong>：不是看一个基因，而是综合100万个基因位点，计算一个"健康风险分数"。就像信用评分不是看一笔交易，而是看 thousands of transactions。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">Biobank</div>
+            <p><strong>UK Biobank</strong>：50万英国人的基因数据银行。这是目前最大的基因组+表型数据库，相当于生命科学的"Google Maps"。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">GWAS</div>
+            <p><strong>GWAS（全基因组关联研究）</strong>：扫描整个基因组，找出与疾病相关的基因变异。就像"全城人口普查"，找出哪些"社区"（基因位点）和"犯罪率"（疾病）相关。</p>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3><span class="emoji">🔗</span> 与其他课程的连接</h3>
+        <table class="comparison-table">
+            <tr><th>从林希虹</th><th>到</th><th>连接点</th></tr>
+            <tr><td>PRS风险预测</td><td>→ Friedman</td><td>预测肥胖风险，提前干预</td></tr>
+            <tr><td>Biobank数据</td><td>→ Langer</td><td>数据驱动精准药物设计</td></tr>
+            <tr><td>基因组统计</td><td>→ Marraffini</td><td>找出需要CRISPR编辑的目标基因</td></tr>
+            <tr><td>AI分析</td><td>→ 林海帆</td><td>预测干细胞治疗效果</td></tr>
+        </table>
+    </div>
+    
+    <div class="quote">
+        "大数据不是告诉你发生了什么，而是预测将要发生什么。"
+        <div class="author">— 林希虹, 哈佛大学</div>
+    </div>
+</div>
+
+<!-- ========== 第四章：Langer ========== -->
+<div class="section" id="sec4">
+    <div class="section-header">
+        <div class="section-num">4</div>
+        <div class="section-title">
+            <h2>Robert Langer · 药物递送的革命</h2>
+            <div class="subtitle">MIT · 被称为"药物递送之父"</div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3><span class="emoji">🔦</span> 一句话理解</h3>
+        <p><strong>药物递送 = "GPS快递系统"</strong></p>
+        <p>传统吃药=把药"扔"进身体，让它自己乱撞。精准药物递送=给药装上GPS，让它准确到达目标位置（如肿瘤），避开健康组织。</p>
+        
+        <div class="big-metaphor">
+            <div class="label">📦 通俗比喻</div>
+            <div class="content">
+                <strong>传统药物</strong> = 往人群中扔包裹，希望收件人刚好路过<br>
+                <strong>精准递送</strong> = 用GPS定位收件人，快递员准确送达<br>
+                <br>
+                纳米颗粒 = 装在包裹里的追踪器+定向装置<br>
+                目的：让"好药"精准到达，"毒药"不伤害健康组织
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3><span class="emoji">💊</span> 核心知识点</h3>
+        
+        <div class="key-point">
+            <div class="bullet">1</div>
+            <p><strong>血管抑制疗法（Angiogenesis Inhibitors）</strong>：肿瘤需要长出新的血管来获取营养。Langer的工作之一是开发"断敌粮草"的药物，抑制血管生成，让肿瘤"饿死"。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">2</div>
+            <p><strong>大分子口服</strong>：胰岛素等大分子药物无法口服（会被胃酸破坏）。Langer开发了"穿透技术"，让大分子药物能口服吸收。这是制药业的圣杯。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">3</div>
+            <p><strong>组织工程</strong>：3D打印器官——用生物材料做"支架"，让细胞按需生长成特定形状。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">4</div>
+            <p><strong>mRNA递送</strong>：COVID疫苗成功背后的技术——把mRNA用脂质纳米颗粒包裹，送入细胞，让细胞生产蛋白质。Langer的实验室是这项技术的先驱。</p>
+        </div>
+    </div>
+    
+    <div class="highlight-box">
+        <div class="title">🔬 为什么Langer重要？</div>
+        <p>Langer拥有世界上最大的学术转化纪录——他的实验室已孵化数十家公司，包括Moderna的技术基础。他的1000+专利不是躺在抽屉里，而是真正改变了制药业。</p>
+    </div>
+    
+    <div class="quote">
+        "科学的目的不是发论文，而是解决问题。"
+        <div class="author">— Robert Langer</div>
+    </div>
+</div>
+
+<!-- ========== 第五章：Morgan Sheng ========== -->
+<div class="section" id="sec5">
+    <div class="section-header">
+        <div class="section-num">5</div>
+        <div class="section-title">
+            <h2>Morgan Sheng · 突触与神经回路</h2>
+            <div class="subtitle">MIT · 神经元之间的"网线接口"</div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3><span class="emoji">🔦</span> 一句话理解</h3>
+        <p><strong>突触 = 大脑的"网线接口"</strong></p>
+        <p>神经元是大脑的"电脑"，突触是电脑之间的"网线接口"。信息通过突触从一个神经元传递到另一个。突触可塑性 = 大脑的学习和记忆机制。</p>
+        
+        <div class="big-metaphor">
+            <div class="label">🖥️ 通俗比喻</div>
+            <div class="content">
+                大脑 = 互联网<br>
+                神经元 = 服务器<br>
+                突触 = 网线接口（RJ45端口）<br>
+                <br>
+                神经信号 = 数据包通过网线传输<br>
+                突触可塑性 = 根据使用情况调整网速<br>
+                LTP（长时程增强）= 超频（用得多变强）<br>
+                LTD（长时程抑制）= 降频（用得少变弱）
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3><span class="emoji">⚡</span> 核心知识点</h3>
+        
+        <div class="key-point">
+            <div class="bullet">1</div>
+            <p><strong>神经信号传递</strong>：电信号→化学信号→电信号。轴突末梢释放神经递质（如谷氨酸），下一个神经元接收后产生电信号。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">2</div>
+            <p><strong>突触可塑性</strong>：LTP和LTD分别是"学习"和"遗忘"的分子机制。长时程增强 = 反复使用的突触连接变强 = 记忆巩固。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">3</div>
+            <p><strong>Shank蛋白</strong>：Sheng实验室发现Shank蛋白是突触后密度（PSD）的骨架蛋白，连接谷氨酸受体和细胞骨架。Shank3突变与自闭症相关。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">4</div>
+            <p><strong>神经胶质细胞</strong>：不只是"支撑"神经元，还负责：营养供给、废物清除、髓鞘形成（加速信号传递）、免疫防御。是"后勤+环卫+电工"。</p>
+        </div>
+    </div>
+    
+    <div class="highlight-box">
+        <div class="title">🧠 与Desimone的连接</div>
+        <p>注意力需要神经元同步振荡（Gamma波）。同步的基础是突触可塑性——如果突触不够灵活，就无法快速同步。所以Sheng研究的突触，是Desimone研究的注意力的"硬件基础"。</p>
+    </div>
+</div>
+
+<!-- ========== 第六章：Marraffini ========== -->
+<div class="section" id="sec6">
+    <div class="section-header">
+        <div class="section-num">6</div>
+        <div class="section-title">
+            <h2>Luciano Marraffini · CRISPR基因剪刀</h2>
+            <div class="subtitle">洛克菲勒大学 · 2020诺贝尔化学奖相关</div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3><span class="emoji">🔦</span> 一句话理解</h3>
+        <p><strong>CRISPR = Word的"查找替换"功能</strong></p>
+        <p>Word可以查找特定的字，然后替换成新的。CRISPR可以在DNA中找到特定序列，然后剪掉、替换成新的基因。</p>
+        
+        <div class="big-metaphor">
+            <div class="label">✂️ 通俗比喻</div>
+            <div class="content">
+                假设你写了一篇100万字的文章，里面有一个错字"中圆"。<br>
+                <br>
+                <strong>传统方法</strong>：请人通读全文，找错字，费时费力<br>
+                <strong>CRISPR方法</strong>：Ctrl+F搜索"中圆"，自动定位，一键替换成"中国"<br>
+                <br>
+                sgRNA = 搜索关键词（GPS导航）<br>
+                Cas9 = 剪刀<br>
+                HDR/NHEJ = 修复机制（粘贴新内容）
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3><span class="emoji">🧬</span> 核心知识点</h3>
+        
+        <div class="key-point">
+            <div class="bullet">1</div>
+            <p><strong>CRISPR起源</strong>：细菌的免疫系统。细菌被病毒感染后，会把病毒的一小段DNA"存档"在CRISPR序列里。下次再遇到，就能"认出"病毒并切割。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">2</div>
+            <p><strong>三部分组成</strong>：Spacer（病毒DNA档案）、sgRNA（导航）、Cas9（剪刀）。缺一不可。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">3</div>
+            <p><strong>PAM序列</strong>：Cas9识别目标基因的"身份证"。通常需要特定的短序列（如NGG）才能切割。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">4</div>
+            <p><strong>应用</strong>：治疗镰刀型贫血、癌症CAR-T编辑、HIV治愈研究、作物改良。</p>
+        </div>
+    </div>
+    
+    <div class="highlight-box">
+        <div class="title">⚠️ 重要区分</div>
+        <p>Marraffini是CRISPR的"细菌免疫机制"发现者（细菌版CRISPR）。Doudna和Charpentier发现了Cas9的切割机制（纯化Cas9蛋白+体外实验）。张锋首次在真核细胞中应用CRISPR。三个方向都是CRISPR革命的一部分。</p>
+    </div>
+    
+    <div class="quote">
+        "CRISPR让我们第一次可以精准地编辑生命密码，就像修改文档一样简单。"
+        <div class="author">— Luciano Marraffini</div>
+    </div>
+</div>
+
+<!-- ========== 第七章：Gary Ruvkun ========== -->
+<div class="section" id="sec7">
+    <div class="section-header">
+        <div class="section-num">7</div>
+        <div class="section-title">
+            <h2>Gary Ruvkun · microRNA与发育时序</h2>
+            <div class="subtitle">Harvard/MIT · 生命的"定时器开关"</div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3><span class="emoji">🔦</span> 一句话理解</h3>
+        <p><strong>microRNA = 生命的"定时器开关"</strong></p>
+        <p>人体有2万多个基因，但不是同时"开机"。有些基因需要在胎儿时期工作，有些需要到成年才启动。microRNA就是控制"什么时候开、什么时候关"的定时器。</p>
+        
+        <div class="big-metaphor">
+            <div class="label">⏰ 通俗比喻</div>
+            <div class="content">
+                想象你有一台"基因自动售货机"：<br>
+                <br>
+                🎂 胎儿期 → 弹出"发育程序A"（长出四肢）<br>
+                🧒 儿童期 → 弹出"发育程序B"（免疫系统成熟）<br>
+                🧑 成年期 → 弹出"生殖程序C"（生育能力）<br>
+                <br>
+                microRNA = 售货机的"定时选择按钮"<br>
+                按下哪个，就弹出对应的"基因产品"
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3><span class="emoji">🧬</span> 核心知识点</h3>
+        
+        <div class="key-point">
+            <div class="bullet">lin-4</div>
+            <p><strong>第一个microRNA</strong>：1993年，Ruvkun的学生Victor Ambros在线虫中发现lin-4。这是人类发现的第一个microRNA，一开始科学界不相信，因为打破了"一个基因一个蛋白"的教条。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">let-7</div>
+            <p><strong>let-7：跨物种保守</strong>：2000年，Ruvkun发现let-7在从线虫到人类的多个物种中都高度保守。这是第一个被证明"跨物种保守"的microRNA，意味着它在进化中非常重要。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">时序调控</div>
+            <p><strong>发育时序</strong>：lin-4和let-7构成一个"时序调控网络"，让线虫（和人类）按正确的时间顺序完成发育步骤。就像交通灯，红→绿→黄依次亮起，确保"车辆"（发育事件）有序通过。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">医学应用</div>
+            <p><strong>癌症与代谢</strong>：let-7在多种癌症中表达降低，提示它在抑制肿瘤中起作用。let-7还调控胰岛素敏感性和代谢。</p>
+        </div>
+    </div>
+    
+    <div class="highlight-box">
+        <div class="title">🔗 与其他课程的关系</div>
+        <p>Friedman的Leptin信号通路中可能有microRNA调控。Ruvkun的时序调控网络可能解释为什么某些基因在特定发育阶段才表达。这为理解"为什么这个细胞变成神经元而不是肌肉细胞"提供了基础。</p>
+    </div>
+</div>
+
+<!-- ========== 第八章：David Ho ========== -->
+<div class="section" id="sec8">
+    <div class="section-header">
+        <div class="section-num">8</div>
+        <div class="section-title">
+            <h2>David Ho · 艾滋病与疫情应对</h2>
+            <div class="subtitle">哥伦比亚大学 · "鸡尾酒疗法之父"</div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3><span class="emoji">🔦</span> 一句话理解</h3>
+        <p><strong>HIV = 史上最狡猾的"间谍"</strong></p>
+        <p>HIV进入免疫细胞（CD4 T细胞）后，会把自身RNA转成DNA，然后整合到宿主基因组里，让宿主细胞生产新病毒。传统药物只能对付游离的病毒，无法清除已整合的HIV。</p>
+        
+        <div class="big-metaphor">
+            <div class="label">🦠 通俗比喻</div>
+            <div class="content">
+                普通病毒 = 潜入建筑的炸弹，爆炸后就消失<br>
+                HIV = 间谍，潜入后把自己变成建筑的一部分（整合到基因组）<br>
+                <br>
+                💊 单药治疗 = 只派一个警察抓间谍 → 间谍学会躲避<br>
+                🍹 鸡尾酒疗法 = 同时派10个警察从不同角度抓 → 间谍无法逃脱<br>
+                <br>
+                鸡尾酒 = 多种抗病毒药物组合，同时攻击HIV复制的多个环节
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3><span class="emoji">💊</span> 核心知识点</h3>
+        
+        <div class="key-point">
+            <div class="bullet">1</div>
+            <p><strong>HIV复制周期</strong>：CD4受体结合→病毒进入→逆转录（RNA→DNA）→整合→转录→翻译→组装→释放。每一步都可能成为药物靶点。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">2</div>
+            <p><strong>鸡尾酒疗法（HAART）</strong>：1996年，David Ho证明联合使用多种抗病毒药物可以长期抑制HIV。这是AIDS治疗的转折点，把死刑变成慢性病。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">3</div>
+            <p><strong>早期治疗的重要性</strong>：病毒库（reservoir）是HIV无法治愈的根本原因。越早治疗，病毒库越小，未来功能性治愈的可能性越大。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">4</div>
+            <p><strong>新冠疫情的启示</strong>：HIV研究经验帮助科学家快速理解SARS-CoV-2的复制机制。mRNA疫苗的成功，部分源于HIV领域对病毒免疫的多年积累。</p>
+        </div>
+    </div>
+    
+    <div class="highlight-box">
+        <div class="title">💡 关键洞察</div>
+        <p>David Ho的贡献不只是鸡尾酒疗法本身，而是"科学到临床"的转化范式：从基础研究（理解病毒复制机制）→ 发现靶点 → 快速临床试验。这正是Langer的"科学解决实际问题"理念的体现。</p>
+    </div>
+    
+    <div class="quote">
+        "艾滋病教会我们：面对新疾病，唯一的武器是深入理解它的生物学。"
+        <div class="author">— David Ho</div>
+    </div>
+</div>
+
+<!-- ========== 第九章：林海帆 ========== -->
+<div class="section" id="sec9">
+    <div class="section-header">
+        <div class="section-num">9</div>
+        <div class="section-title">
+            <h2>林海帆 · 干细胞与再生医学</h2>
+            <div class="subtitle">耶鲁大学 · 耶鲁干细胞中心主任</div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3><span class="emoji">🔦</span> 一句话理解</h3>
+        <p><strong>干细胞 = 人体的"原始种子"</strong></p>
+        <p>普通细胞只能分裂成同一种细胞（如皮肤细胞只能变成皮肤细胞）。干细胞是"万能种子"——可以长成任何类型的细胞（神经元、心肌细胞、肝细胞等）。</p>
+        
+        <div class="big-metaphor">
+            <div class="label">🌱 通俗比喻</div>
+            <div class="content">
+                人体 = 一座城市<br>
+                普通细胞 = 砖块，只能建一种建筑（砖房）<br>
+                干细胞 = 种子，可以长成任何东西（树、 花、草）<br>
+                <br>
+                🌰 胚胎干细胞 = 未分化的种子（可以长成任何器官）<br>
+                🏠 组织干细胞 = 半分化（只能长成某类器官，如皮肤）<br>
+                🧪 iPSC = 用"成年种子"重新编程为"原始种子"
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3><span class="emoji">🧬</span> 核心知识点</h3>
+        
+        <div class="key-point">
+            <div class="bullet">1</div>
+            <p><strong>干细胞分类</strong>：胚胎干细胞（ESC，全能）、成体干细胞（多能）、诱导多能干细胞（iPSC，逆转分化）。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">2</div>
+            <p><strong>iPSC技术（2006）</strong>：日本Shinya Yamanaka用4个转录因子（Oct3/4, Sox2, Klf4, c-Myc，简称OSKM）把成体细胞"重编程"为干细胞。这是再生医学的里程碑，无需胚胎即可获得干细胞。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">3</div>
+            <p><strong>Yamanaka因子</strong>：这四个因子被称为"山中因子"，能把已分化的细胞"倒拨时钟"，回到类似胚胎的状态。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">4</div>
+            <p><strong>临床应用</strong>：Laura Niklason（人工肺）、Eugene Redmond（帕金森细胞治疗）、Christopher Breuer（人工血管修复先天性心脏病）。</p>
+        </div>
+        
+        <div class="key-point">
+            <div class="bullet">5</div>
+            <p><strong>AI+大数据</strong>：林海帆强调AI将从表型预测到分子结构预测，从个性化疾病机制到个性化治疗方案。</p>
+        </div>
+    </div>
+    
+    <div class="highlight-box">
+        <div class="title">🔗 与其他课程的关系</div>
+        <p>iPSC + CRISPR = 个性化细胞疗法。Marraffini的CRISPR可以编辑iPSC的基因，林希虹的PRS可以预测干细胞治疗效果，Langer的递送系统可以把干细胞精准送达。</p>
+    </div>
+    
+    <div class="quote">
+        "干细胞让我们第一次有可能'重新长出'失去的组织。"
+        <div class="author">— 林海帆, 耶鲁大学</div>
+    </div>
+</div>
+
+<!-- ========== 知识网络总图 ========== -->
+<div class="section" id="network">
+    <div class="section-header">
+        <div class="section-num">🕸️</div>
+        <div class="section-title">
+            <h2>知识网络：如何把所有知识点串联</h2>
+            <div class="subtitle">一张图理解九位科学家的内在联系</div>
+        </div>
+    </div>
+    
+    <div class="network-diagram">
+        <div class="network-title">🧬 生命科学的三层楼</div>
+        <div class="network-layers">
+            <div class="layer">
+                <div class="layer-label">🏠 顶层：表型/行为</div>
+                <div class="layer-items">
+                    <div class="node" title="注意力=聚光灯">Desimone</div>
+                    <div class="node" title="HIV=间谍">David Ho</div>
+                    <div class="node" title="代谢=时序">Friedman</div>
+                </div>
+            </div>
+            <div class="layer-connection">↓</div>
+            <div class="layer">
+                <div class="layer-label">🧱 中层：细胞/系统</div>
+                <div class="layer-items">
+                    <div class="node" title="突触=网线">Sheng</div>
+                    <div class="node" title="药物递送=GPS">Langer</div>
+                    <div class="node" title="干细胞=种子">林海帆</div>
+                    <div class="node" title="发育时序=定时器">Ruvkun</div>
+                </div>
+            </div>
+            <div class="layer-connection">↓</div>
+            <div class="layer">
+                <div class="layer-label">🏗️ 底层：基因/调控</div>
+                <div class="layer-items">
+                    <div class="node" title="CRISPR=剪刀">Marraffini</div>
+                    <div class="node" title="AI统计=地图">林希虹</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <h3><span class="emoji">🦋</span> 蝴蝶效应：知识点之间的连接</h3>
+        <table class="comparison-table">
+            <tr><th>从</th><th>到</th><th>连接</th></tr>
+            <tr><td>Marraffini (CRISPR)</td><td>Friedman (Leptin)</td><td>编辑Leptin基因治疗肥胖</td></tr>
+            <tr><td>林希虹 (Biobank)</td><td>Langer (递送)</td><td>数据驱动精准药物设计</td></tr>
+            <tr><td>Sheng (突触)</td><td>Desimone (注意力)</td><td>突触可塑性是注意力的硬件基础</td></tr>
+            <tr><td>Ruvkun (miRNA)</td><td>Friedman (代谢)</td><td>miRNA调控代谢基因表达</td></tr>
+            <tr><td>林海帆 (iPSC)</td><td>David Ho (免疫)</td><td>干细胞+免疫细胞联合治疗</td></tr>
+            <tr><td>Marraffini (CRISPR)</td><td>林海帆 (iPSC)</td><td>CRISPR编辑iPSC治疗遗传病</td></tr>
+            <tr><td>林希虹 (PRS)</td><td>林海帆 (治疗)</td><td>基因风险预测+个性化细胞疗法</td></tr>
+            <tr><td>Ruvkun (发育)</td><td>林海帆 (干细胞)</td><td>发育时序决定干细胞分化方向</td></tr>
+        </table>
+    </div>
+    
+    <div class="highlight-box">
+        <div class="title">🎯 核心思维框架：三个终极问题</div>
+        <div class="concept-grid">
+            <div class="concept-item">
+                <div class="icon">🧬</div>
+                <div class="name">"我是谁？"</div>
+                <div class="desc">基因组决定你的特质（Marraffini + 林希虹 + Ruvkun）</div>
+            </div>
+            <div class="concept-item">
+                <div class="icon">🧫</div>
+                <div class="name">"我如何运作？"</div>
+                <div class="desc">细胞系统执行生命程序（Friedman + Langer + Sheng + 林海帆）</div>
+            </div>
+            <div class="concept-item">
+                <div class="icon">🏥</div>
+                <div class="name">"我如何被治愈？"</div>
+                <div class="desc">疾病干预与临床应用（Desimone + David Ho）</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========== 快速记忆法 ========== -->
+<div class="section" id="memory">
+    <div class="section-header">
+        <div class="section-num">🧠</div>
+        <div class="section-title">
+            <h2>快速记忆法：一句话记住每位科学家</h2>
+            <div class="subtitle">考试必备 · 30秒回忆</div>
+        </div>
+    </div>
+    
+    <div class="card">
+        <table class="comparison-table">
+            <tr><th>科学家</th><th>一句话记忆</th><th>关键词</th></tr>
+            <tr><td><strong>Jeffrey Friedman</strong></td><td>Leptin = 身体的烟雾报警器，肥胖是报警器失灵</td><td>Leptin / 肥胖 / VMH</td></tr>
+            <tr><td><strong>Robert Desimone</strong></td><td>注意力 = 大脑的聚光灯，照哪里就能看清哪里</td><td>Attention / PFC / Gamma</td></tr>
+            <tr><td><strong>林希虹</strong></td><td>PRS = 基因版信用评分，预测未来健康风险</td><td>WGS / PRS / Biobank</td></tr>
+            <tr><td><strong>Robert Langer</strong></td><td>药物递送 = GPS快递，精准送到目标位置</td><td>Nanoparticles / mRNA / 递送</td></tr>
+            <tr><td><strong>Morgan Sheng</strong></td><td>突触 = 网线接口，大脑的硬件连接</td><td>LTP / LTD / Shank</td></tr>
+            <tr><td><strong>Luciano Marraffini</strong></td><td>CRISPR = Word查找替换，精准编辑基因</td><td>Cas9 / sgRNA / PAM</td></tr>
+            <tr><td><strong>Gary Ruvkun</strong></td><td>let-7 = 生命的定时器开关，控制发育时间</td><td>lin-4 / let-7 / 时序</td></tr>
+            <tr><td><strong>David Ho</strong></td><td>HIV = 狡猾的间谍，鸡尾酒疗法 = 多重围堵</td><td>HAART / 病毒库 / 整合</td></tr>
+            <tr><td><strong>林海帆</strong></td><td>干细胞 = 原始种子，可以长成任何器官</td><td>iPSC / Yamanaka因子 / 再生</td></tr>
+        </table>
+    </div>
+</div>
+
+<!-- 页脚 -->
+<div class="footer">
+    <p>GASA Boston-NYC 2026 · 生命科学入门指南</p>
+    <p>通俗比喻 · 快速理解 · 过目不忘</p>
+</div>
+
+<script>
+function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
