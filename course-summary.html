@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GASA Boston-NYC 2026 · 九位科学家完整课程</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0e17;
+            --bg-card: #111827;
+            --accent-1: #FF6B6B;
+            --accent-2: #4ECDC4;
+            --accent-3: #FFE66D;
+            --accent-4: #95E1D3;
+            --accent-5: #F38181;
+            --accent-6: #AA96DA;
+            --accent-7: #74B9FF;
+            --accent-8: #A29BFE;
+            --accent-9: #FD79A8;
+            --text-primary: #F8F8F2;
+            --text-secondary: #A0AEC0;
+            --border-color: rgba(255,255,255,0.08);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans SC', -apple-system, sans-serif; background: var(--bg-dark); color: var(--text-primary); line-height: 1.8; }
+
+        .nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(10,14,23,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); z-index: 1000; padding: 0 20px; }
+        .nav-inner { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; gap: 20px; height: 70px; overflow-x: auto; }
+        .nav-logo { font-size: 1.1rem; font-weight: 700; background: linear-gradient(135deg, var(--accent-1), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; }
+        .nav-links { display: flex; gap: 6px; }
+        .nav-link { padding: 6px 12px; border-radius: 16px; font-size: 0.8rem; color: var(--text-secondary); text-decoration: none; white-space: nowrap; transition: all 0.2s; border: 1px solid transparent; }
+        .nav-link:hover { background: rgba(255,255,255,0.1); color: var(--text-primary); }
+
+        .hero { padding: 120px 20px 60px; text-align: center; background: linear-gradient(180deg, rgba(78,205,196,0.1) 0%, transparent 50%); }
+        .hero h1 { font-size: 2.8rem; font-weight: 900; margin-bottom: 16px; background: linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--accent-6)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-subtitle { font-size: 1.1rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 30px; }
+        .meta-badges { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .badge { padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); }
+
+        .section { max-width: 1400px; margin: 0 auto; padding: 60px 20px; border-top: 1px solid var(--border-color); }
+        .section-header { display: flex; align-items: center; gap: 20px; margin-bottom: 30px; }
+        .section-num { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 900; }
+        .section-title h2 { font-size: 1.6rem; margin-bottom: 4px; }
+        .section-title .subtitle { color: var(--text-secondary); font-size: 0.9rem; }
+
+        .prof-card { background: var(--bg-card); border-radius: 20px; overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 30px; }
+        .prof-card-header { padding: 24px; display: flex; align-items: center; gap: 20px; }
+        .prof-avatar { width: 70px; height: 70px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2rem; flex-shrink: 0; }
+        .prof-info h3 { font-size: 1.3rem; margin-bottom: 4px; }
+        .prof-info .affiliation { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 8px; }
+        .prof-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+        .prof-tag { padding: 3px 10px; border-radius: 12px; font-size: 0.7rem; background: rgba(255,255,255,0.08); }
+        .prof-card-body { padding: 24px; }
+
+        .key-points { margin-bottom: 20px; }
+        .key-points h4 { font-size: 1rem; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+        .point-item { display: flex; gap: 14px; padding: 14px; background: rgba(255,255,255,0.03); border-radius: 12px; margin-bottom: 10px; border-left: 3px solid; }
+        .point-icon { font-size: 1.3rem; flex-shrink: 0; }
+        .point-content h5 { font-size: 0.9rem; margin-bottom: 4px; }
+        .point-content p { font-size: 0.85rem; color: var(--text-secondary); }
+
+        .metaphor-box { background: linear-gradient(135deg, var(--prof-glow), rgba(255,255,255,0.02)); border-radius: 14px; padding: 20px; border: 1px solid; margin-top: 20px; }
+        .metaphor-box h4 { font-size: 0.95rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .metaphor-box p { font-size: 0.9rem; font-style: italic; color: var(--text-primary); line-height: 1.8; }
+
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 40px; }
+        .summary-card { background: var(--bg-card); border-radius: 16px; padding: 20px; border-top: 3px solid; }
+        .summary-card h4 { font-size: 1rem; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+        .summary-card ul { list-style: none; }
+        .summary-card li { padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem; color: var(--text-secondary); }
+        .summary-card li:last-child { border-bottom: none; }
+        .summary-card li::before { content: '→'; margin-right: 8px; color: var(--accent-2); }
+
+        .network-section { background: linear-gradient(180deg, transparent, rgba(78,205,196,0.05), transparent); padding: 80px 20px; }
+        .network-title { text-align: center; margin-bottom: 50px; }
+        .network-title h2 { font-size: 2rem; margin-bottom: 12px; background: linear-gradient(135deg, var(--accent-2), var(--accent-6)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .network-title p { color: var(--text-secondary); max-width: 500px; margin: 0 auto; }
+
+        .layer { margin-bottom: 40px; }
+        .layer-title { text-align: center; font-size: 0.85rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; }
+        .layer-nodes { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+        .net-node { background: var(--bg-card); border-radius: 14px; padding: 16px 20px; border: 1px solid var(--border-color); text-align: center; min-width: 150px; transition: all 0.3s; }
+        .net-node:hover { transform: translateY(-4px); border-color: var(--node-color); }
+        .net-node .icon { font-size: 1.8rem; margin-bottom: 8px; }
+        .net-node h4 { font-size: 0.9rem; margin-bottom: 4px; }
+        .net-node p { font-size: 0.75rem; color: var(--text-secondary); }
+
+        .conn-list { max-width: 900px; margin: 50px auto 0; }
+        .conn-item { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; padding: 16px; background: var(--bg-card); border-radius: 14px; margin-bottom: 12px; border: 1px solid var(--border-color); }
+        .conn-from, .conn-to { padding: 12px; border-radius: 10px; background: rgba(255,255,255,0.03); }
+        .conn-from h5, .conn-to h5 { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 4px; }
+        .conn-from .name, .conn-to .name { font-size: 0.9rem; font-weight: 600; }
+        .conn-arrow { font-size: 1.3rem; color: var(--accent-2); }
+        .conn-label { grid-column: 1 / -1; padding: 10px 14px; background: rgba(78,205,196,0.08); border-radius: 8px; font-size: 0.85rem; color: var(--text-primary); }
+
+        .three-layers { max-width: 1000px; margin: 60px auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .layer-card { background: var(--bg-card); padding: 24px; border-radius: 16px; text-align: center; border-top: 4px solid; }
+        .layer-card h4 { font-size: 1.1rem; margin-bottom: 10px; }
+        .layer-card p { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px; }
+        .layer-card .scientists { font-size: 0.8rem; color: var(--accent-2); }
+
+        footer { text-align: center; padding: 50px 20px; border-top: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.9rem; }
+
+        .color-1 { --prof-color: var(--accent-1); --prof-glow: rgba(255,107,107,0.2); }
+        .color-2 { --prof-color: var(--accent-2); --prof-glow: rgba(78,205,196,0.2); }
+        .color-3 { --prof-color: var(--accent-3); --prof-glow: rgba(255,230,109,0.2); }
+        .color-4 { --prof-color: var(--accent-4); --prof-glow: rgba(149,225,211,0.2); }
+        .color-5 { --prof-color: var(--accent-5); --prof-glow: rgba(243,129,129,0.2); }
+        .color-6 { --prof-color: var(--accent-6); --prof-glow: rgba(170,150,218,0.2); }
+        .color-7 { --prof-color: var(--accent-7); --prof-glow: rgba(116,185,255,0.2); }
+        .color-8 { --prof-color: var(--accent-8); --prof-glow: rgba(162,155,254,0.2); }
+        .color-9 { --prof-color: var(--accent-9); --prof-glow: rgba(253,121,168,0.2); }
+
+        @media (max-width: 900px) {
+            .hero h1 { font-size: 2rem; }
+            .nav-links { display: none; }
+            .conn-item { grid-template-columns: 1fr; }
+            .conn-arrow { transform: rotate(90deg); text-align: center; }
+            .three-layers { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <div class="nav-logo">GASA 2026</div>
+            <div class="nav-links">
+                <a href="#overview" class="nav-link">概览</a>
+                <a href="#friedman" class="nav-link">Friedman</a>
+                <a href="#desimone" class="nav-link">Desimone</a>
+                <a href="#linxh" class="nav-link">林希虹</a>
+                <a href="#langer" class="nav-link">Langer</a>
+                <a href="#sheng" class="nav-link">Sheng</a>
+                <a href="#marraffini" class="nav-link">Marraffini</a>
+                <a href="#ruvkun" class="nav-link">Ruvkun</a>
+                <a href="#ho" class="nav-link">David Ho</a>
+                <a href="#linhf" class="nav-link">林海帆</a>
+                <a href="#network" class="nav-link">知识网络</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero" id="overview">
+        <h1>GASA Boston-NYC 2026</h1>
+        <p class="hero-subtitle">九位世界级科学家 · 前沿课程完整总结<br>从基因到临床，从实验室到救命</p>
+        <div class="meta-badges">
+            <span class="badge">🧬 基因调控</span>
+            <span class="badge">🧫 细胞系统</span>
+            <span class="badge">🏥 临床医学</span>
+            <span class="badge">🤖 AI未来</span>
+        </div>
+    </section>
+
+    <!-- Jeffrey Friedman -->
+    <section class="section" id="friedman">
+        <div class="section-header">
+            <div class="section-num color-1" style="background: var(--accent-1);">1</div>
+            <div class="section-title">
+                <h2>Jeffrey Friedman · 肥胖的神经生物学</h2>
+                <div class="subtitle">洛克菲勒大学 · Leptin发现者</div>
+            </div>
+        </div>
+        <div class="prof-card color-1">
+            <div class="prof-card-header">
+                <div class="prof-avatar" style="background: var(--accent-1);">🍖</div>
+                <div class="prof-info">
+                    <h3>Jeffrey Friedman</h3>
+                    <div class="affiliation">洛克菲勒大学 · 分子遗传学实验室</div>
+                    <div class="prof-tags">
+                        <span class="prof-tag">Leptin</span>
+                        <span class="prof-tag">VMH</span>
+                        <span class="prof-tag">能量平衡</span>
+                    </div>
+                </div>
+            </div>
+            <div class="prof-card-body">
+                <div class="key-points">
+                    <h4>🔬 核心发现</h4>
+                    <div class="point-item" style="border-color: var(--accent-1);">
+                        <div class="point-icon">🔑</div>
+                        <div class="point-content">
+                            <h5>Leptin：身体的「饱腹激素」</h5>
+                            <p>脂肪细胞分泌Leptin，向大脑报告能量储备。Leptin↓ = 能量不足 → 饥饿；Leptin↑ = 能量充足 → 饱腹</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-1);">
+                        <div class="point-icon">🏠</div>
+                        <div class="point-content">
+                            <h5>VMH：大脑的「饥饿总部」</h5>
+                            <p>丘脑腹内侧核(VMH)是控制饥饿感的核心区域。损伤会导致无法抑制的暴食。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-1);">
+                        <div class="point-icon">⚠️</div>
+                        <div class="point-content">
+                            <h5>Leptin抵抗：报警器失灵</h5>
+                            <p>肥胖者Leptin水平反而更高，但大脑不敏感——烟雾报警器失灵，耳朵堵住了。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-1);">
+                        <div class="point-icon">😴</div>
+                        <div class="point-content">
+                            <h5>睡眠不足直接导致饥饿</h5>
+                            <p>睡眠&lt;7小时：Leptin↓15.5%，Ghrelin(饥饿激素)↑14.9%。每天睡6小时vs8小时，一年可多增12磅。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-1);">
+                        <div class="point-icon">🏃</div>
+                        <div class="point-content">
+                            <h5>运动≠大量热量消耗</h5>
+                            <p>身体会代偿性降低基础代谢。单纯运动减肥效果有限，需配合饮食控制。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="metaphor-box" style="border-color: var(--accent-1); background: linear-gradient(135deg, rgba(255,107,107,0.15), rgba(255,255,255,0.02));">
+                    <h4>🎯 比喻</h4>
+                    <p>「Leptin = 烟雾报警器。脂肪 = 火灾。肥胖 = 报警器一直在响但你塞住了耳朵——身体在喊'够了够了'，但大脑听不见。」</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Robert Desimone -->
+    <section class="section" id="desimone">
+        <div class="section-header">
+            <div class="section-num" style="background: var(--accent-2);">2</div>
+            <div class="section-title">
+                <h2>Robert Desimone · 注意力网络与神经科学未来</h2>
+                <div class="subtitle">MIT McGovern研究所 · 所长</div>
+            </div>
+        </div>
+        <div class="prof-card color-2">
+            <div class="prof-card-header">
+                <div class="prof-avatar" style="background: var(--accent-2);">👁️</div>
+                <div class="prof-info">
+                    <h3>Robert Desimone</h3>
+                    <div class="affiliation">MIT McGovern脑研究所 · Doris and Don Berkey教授</div>
+                    <div class="prof-tags">
+                        <span class="prof-tag">注意力</span>
+                        <span class="prof-tag">视觉</span>
+                        <span class="prof-tag">AI</span>
+                    </div>
+                </div>
+            </div>
+            <div class="prof-card-body">
+                <div class="key-points">
+                    <h4>🔬 核心研究</h4>
+                    <div class="point-item" style="border-color: var(--accent-2);">
+                        <div class="point-icon">🔦</div>
+                        <div class="point-content">
+                            <h5>注意力：大脑的「聚光灯」</h5>
+                            <p>视觉信息海量，大脑处理能力有限。注意力选择性增强目标区域，抑制背景噪音。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-2);">
+                        <div class="point-icon">🛣️</div>
+                        <div class="point-content">
+                            <h5>What vs Where通路</h5>
+                            <p>腹侧通路识别物体是什么，背侧通路识别物体在哪里。两条通路平行工作。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-2);">
+                        <div class="point-icon">👑</div>
+                        <div class="point-content">
+                            <h5>前额叶：注意力的「指挥官」</h5>
+                            <p>前额叶皮层负责自上而下的注意力控制——你想看哪里，资源就调到哪里。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-2);">
+                        <div class="point-icon">⚡</div>
+                        <div class="point-content">
+                            <h5>Gamma振荡：神经的「交响乐」</h5>
+                            <p>40Hz同步振荡让不同脑区协调工作，像交响乐团的指挥统一节奏。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-2);">
+                        <div class="point-icon">🤖</div>
+                        <div class="point-content">
+                            <h5>未来：脑机接口 · 神经回路工程</h5>
+                            <p>SuperBrain：整合神经科学与AI，突破人类认知极限，实现"超越身体极限"。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="metaphor-box" style="border-color: var(--accent-2); background: linear-gradient(135deg, rgba(78,205,196,0.15), rgba(255,255,255,0.02));">
+                    <h4>🎯 比喻</h4>
+                    <p>「注意力 = 嘈杂派对上的主持人聚光灯。你的大脑派出主持人，在噪音中帮你聚焦到想见的人，其他人都变暗了。」</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 林希虹 -->
+    <section class="section" id="linxh">
+        <div class="section-header">
+            <div class="section-num" style="background: var(--accent-3); color: #000;">3</div>
+            <div class="section-title">
+                <h2>林希虹 · AI+统计学赋能精准医学</h2>
+                <div class="subtitle">哈佛大学 · 统计遗传学权威</div>
+            </div>
+        </div>
+        <div class="prof-card color-3">
+            <div class="prof-card-header">
+                <div class="prof-avatar" style="background: var(--accent-3);">📊</div>
+                <div class="prof-info">
+                    <h3>林希虹</h3>
+                    <div class="affiliation">哈佛陈曾熙公共卫生学院 · 生物统计系</div>
+                    <div class="prof-tags">
+                        <span class="prof-tag">WGS</span>
+                        <span class="prof-tag">PRS</span>
+                        <span class="prof-tag">Biobank</span>
+                    </div>
+                </div>
+            </div>
+            <div class="prof-card-body">
+                <div class="key-points">
+                    <h4>🔬 核心方法</h4>
+                    <div class="point-item" style="border-color: var(--accent-3);">
+                        <div class="point-icon">🧬</div>
+                        <div class="point-content">
+                            <h5>WGS：完整的「人体说明书」</h5>
+                            <p>全基因组测序读取全部30亿碱基对，比芯片覆盖更多罕见变异，是"高清摄像头"。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-3);">
+                        <div class="point-icon">📊</div>
+                        <div class="point-content">
+                            <h5>PRS：多基因风险评分</h5>
+                            <p>把百万个基因位点综合成一个数字，预测未来患病风险——像信用评分之于贷款。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-3);">
+                        <div class="point-icon">🏦</div>
+                        <div class="point-content">
+                            <h5>UK Biobank：50万人的数据金矿</h5>
+                            <p>英国生物银行收录50万人的基因+健康记录，是目前最大的基因组-表型关联研究数据库。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-3);">
+                        <div class="point-icon">🤖</div>
+                        <div class="point-content">
+                            <h5>AI + 统计：从数据到洞见</h5>
+                            <p>机器学习发现隐藏模式，统计学确保结论可靠。两者结合 = 从数据中挖掘真相。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="metaphor-box" style="border-color: var(--accent-3); background: linear-gradient(135deg, rgba(255,230,109,0.15), rgba(255,255,255,0.02));">
+                    <h4>🎯 比喻</h4>
+                    <p>「WGS = 高清地图。PRS = 预测你家附近会不会'堵车'。Biobank = 50万家人的地图+健康档案。AI+统计 = 城市规划AI。」</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Robert Langer -->
+    <section class="section" id="langer">
+        <div class="section-header">
+            <div class="section-num" style="background: var(--accent-4); color: #000;">4</div>
+            <div class="section-title">
+                <h2>Robert Langer · 药物递送系统</h2>
+                <div class="subtitle">MIT · 被引用最多的工程师</div>
+            </div>
+        </div>
+        <div class="prof-card color-4">
+            <div class="prof-card-header">
+                <div class="prof-avatar" style="background: var(--accent-4);">💊</div>
+                <div class="prof-info">
+                    <h3>Robert Langer</h3>
+                    <div class="affiliation">MIT Koch Institute · 化学工程系</div>
+                    <div class="prof-tags">
+                        <span class="prof-tag">纳米医学</span>
+                        <span class="prof-tag">组织工程</span>
+                        <span class="prof-tag">药物递送</span>
+                    </div>
+                </div>
+            </div>
+            <div class="prof-card-body">
+                <div class="key-points">
+                    <h4>🔬 核心贡献</h4>
+                    <div class="point-item" style="border-color: var(--accent-4);">
+                        <div class="point-icon">📦</div>
+                        <div class="point-content">
+                            <h5>精准药物递送：从"乱扔"到"GPS"</h5>
+                            <p>传统吃药是'撒胡椒面'。Langer的技术让药物像装了GPS，精准到达病变部位，减少副作用。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-4);">
+                        <div class="point-icon">🧫</div>
+                        <div class="point-content">
+                            <h5>血管抑制治疗：断敌粮草</h5>
+                            <p>肿瘤需要血管输送营养。阻止血管生成 = 饿死肿瘤。"断敌粮草"策略。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-4);">
+                        <div class="point-icon">🧬</div>
+                        <div class="point-content">
+                            <h5>大分子口服：蛋白质"穿盔甲"</h5>
+                            <p>胰岛素等大分子以前只能注射。聚合物纳米颗粒让它们能口服——给娇弱的蛋白质穿上保护盔甲。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-4);">
+                        <div class="point-icon">🖨️</div>
+                        <div class="point-content">
+                            <h5>组织工程：3D打印器官</h5>
+                            <p>用生物材料和细胞3D打印人工组织/器官，解决器官移植短缺问题。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="metaphor-box" style="border-color: var(--accent-4); background: linear-gradient(135deg, rgba(149,225,211,0.15), rgba(255,255,255,0.02));">
+                    <h4>🎯 比喻</h4>
+                    <p>「传统药物 = 乱扔快递。Langer的递送 = GPS精准配送，包裹装在智能集装箱(纳米颗粒)里，直接送到正确家庭(病变细胞)。」</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Morgan Sheng -->
+    <section class="section" id="sheng">
+        <div class="section-header">
+            <div class="section-num" style="background: var(--accent-5);">5</div>
+            <div class="section-title">
+                <h2>Morgan Sheng · 突触与神经回路</h2>
+                <div class="subtitle">MIT · 突触神经科学领导者</div>
+            </div>
+        </div>
+        <div class="prof-card color-5">
+            <div class="prof-card-header">
+                <div class="prof-avatar" style="background: var(--accent-5);">🧠</div>
+                <div class="prof-info">
+                    <h3>Morgan Sheng</h3>
+                    <div class="affiliation">MIT McGovern脑研究所 · 脑与认知科学系</div>
+                    <div class="prof-tags">
+                        <span class="prof-tag">突触</span>
+                        <span class="prof-tag">神经回路</span>
+                        <span class="prof-tag">可塑性</span>
+                    </div>
+                </div>
+            </div>
+            <div class="prof-card-body">
+                <div class="key-points">
+                    <h4>🔬 核心发现</h4>
+                    <div class="point-item" style="border-color: var(--accent-5);">
+                        <div class="point-icon">🔌</div>
+                        <div class="point-content">
+                            <h5>突触：大脑的"网线接口"</h5>
+                            <p>神经元通过突触传递信号。一个神经元有10000+突触，人脑约100万亿个突触。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-5);">
+                        <div class="point-icon">⚡</div>
+                        <div class="point-content">
+                            <h5>神经信号：电-化学-电</h5>
+                            <p>突触前释放神经递质(如谷氨酸)，穿过间隙与突触后受体结合，产生电信号。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-5);">
+                        <div class="point-icon">🔄</div>
+                        <div class="point-content">
+                            <h5>突触可塑性：大脑的"重编程"</h5>
+                            <p>LTP(长时程增强)和LTD(长时程抑制)是记忆和学习的基础。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-5);">
+                        <div class="point-icon">🧹</div>
+                        <div class="point-content">
+                            <h5>神经胶质细胞：被忽视的"后勤部队"</h5>
+                            <p>不只是支撑——还参与信号传递、髓鞘形成、清理碎片。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="metaphor-box" style="border-color: var(--accent-5); background: linear-gradient(135deg, rgba(243,129,129,0.15), rgba(255,255,255,0.02));">
+                    <h4>🎯 比喻</h4>
+                    <p>「大脑 = 互联网。突触 = 网线接口。胶质细胞 = 快递员+环卫+电工。突触可塑性 = 接口可自动升级或降级。」</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Luciano Marraffini -->
+    <section class="section" id="marraffini">
+        <div class="section-header">
+            <div class="section-num" style="background: var(--accent-6);">6</div>
+            <div class="section-title">
+                <h2>Luciano Marraffini · CRISPR基因编辑</h2>
+                <div class="subtitle">洛克菲勒大学 · CRISPR先驱</div>
+            </div>
+        </div>
+        <div class="prof-card color-6">
+            <div class="prof-card-header">
+                <div class="prof-avatar" style="background: var(--accent-6);">✂️</div>
+                <div class="prof-info">
+                    <h3>Luciano Marraffini</h3>
+                    <div class="affiliation">洛克菲勒大学 · 细菌学实验室</div>
+                    <div class="prof-tags">
+                        <span class="prof-tag">CRISPR</span>
+                        <span class="prof-tag">Cas9</span>
+                        <span class="prof-tag">基因驱动</span>
+                    </div>
+                </div>
+            </div>
+            <div class="prof-card-body">
+                <div class="key-points">
+                    <h4>🔬 核心发现</h4>
+                    <div class="point-item" style="border-color: var(--accent-6);">
+                        <div class="point-icon">🧬</div>
+                        <div class="point-content">
+                            <h5>CRISPR：细菌的"免疫记忆"</h5>
+                            <p>细菌进化出CRISPR系统记忆并抵抗病毒感染。每次感染后把病毒DNA片段'存档'。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-6);">
+                        <div class="point-icon">✂️</div>
+                        <div class="point-content">
+                            <h5>Cas9：精准的"基因剪刀"</h5>
+                            <p>Cas9蛋白在guide RNA引导下精准切割DNA——像Word的'查找替换'功能。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-6);">
+                        <div class="point-icon">🧭</div>
+                        <div class="point-content">
+                            <h5>sgRNA：剪刀的"GPS导航"</h5>
+                            <p>Single guide RNA负责定位目标序列。设计正确的sgRNA = 确保剪刀剪对地方。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-6);">
+                        <div class="point-icon">🌍</div>
+                        <div class="point-content">
+                            <h5>基因驱动：改变物种命运</h5>
+                            <p>让基因改造在种群中快速传播。理论上可以让疟蚊不再传播疟疾。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="metaphor-box" style="border-color: var(--accent-6); background: linear-gradient(135deg, rgba(170,150,218,0.15), rgba(255,255,255,0.02));">
+                    <h4>🎯 比喻</h4>
+                    <p>「CRISPR = Word的'查找替换'。sgRNA = 查找框里的关键词。Cas9 = 执行'删除+替换'的操作。基因治疗 = 找到错字，替换成正确的。」</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gary Ruvkun -->
+    <section class="section" id="ruvkun">
+        <div class="section-header">
+            <div class="section-num" style="background: var(--accent-7);">7</div>
+            <div class="section-title">
+                <h2>Gary Ruvkun · microRNA与发育时序</h2>
+                <div class="subtitle">Harvard/MIT · let-7发现者</div>
+            </div>
+        </div>
+        <div class="prof-card color-7">
+            <div class="prof-card-header">
+                <div class="prof-avatar" style="background: var(--accent-7);">⏰</div>
+                <div class="prof-info">
+                    <h3>Gary Ruvkun</h3>
+                    <div class="affiliation">Harvard/MIT · 分子遗传学</div>
+                    <div class="prof-tags">
+                        <span class="prof-tag">let-7</span>
+                        <span class="prof-tag">microRNA</span>
+                        <span class="prof-tag">发育时序</span>
+                    </div>
+                </div>
+            </div>
+            <div class="prof-card-body">
+                <div class="key-points">
+                    <h4>🔬 核心发现</h4>
+                    <div class="point-item" style="border-color: var(--accent-7);">
+                        <div class="point-icon">🧬</div>
+                        <div class="point-content">
+                            <h5>let-7 miRNA：首个跨物种保守的microRNA</h5>
+                            <p>2001年发现let-7在动物界高度保守——从线虫到人类都存在，是发育时序的关键调控因子。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-7);">
+                        <div class="point-icon">⏰</div>
+                        <div class="point-content">
+                            <h5>时序性调控：生命的"定时开关"</h5>
+                            <p>microRNA在特定时间开启/关闭基因表达，像生命的定时器一样控制发育进程。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-7);">
+                        <div class="point-icon">🐛</div>
+                        <div class="point-content">
+                            <h5>lin-4：第一个被发现的microRNA</h5>
+                            <p>1993年发现lin-4调控线虫发育时序，开创了microRNA生物学领域。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-7);">
+                        <div class="point-icon">🧬</div>
+                        <div class="point-content">
+                            <h5>人类组织中的保守性</h5>
+                            <p>let-7在人类多种组织中表达，调控细胞分化、增殖和代谢。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="metaphor-box" style="border-color: var(--accent-7); background: linear-gradient(135deg, rgba(116,185,255,0.15), rgba(255,255,255,0.02));">
+                    <h4>🎯 比喻</h4>
+                    <p>「microRNA = 生命的'定时器开关'。每个开关在不同时间按下(表达)，让基因在不同阶段开启或关闭——就像演出的节目表。」</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- David Ho -->
+    <section class="section" id="ho">
+        <div class="section-header">
+            <div class="section-num" style="background: var(--accent-8);">8</div>
+            <div class="section-title">
+                <h2>David Ho · 艾滋病与疫情应对</h2>
+                <div class="subtitle">哥伦比亚大学 · 鸡尾酒疗法之父</div>
+            </div>
+        </div>
+        <div class="prof-card color-8">
+            <div class="prof-card-header">
+                <div class="prof-avatar" style="background: var(--accent-8);">🦠</div>
+                <div class="prof-info">
+                    <h3>David Ho</h3>
+                    <div class="affiliation">哥伦比亚大学 · Aaron Diamond AIDS研究中心</div>
+                    <div class="prof-tags">
+                        <span class="prof-tag">HIV</span>
+                        <span class="prof-tag">鸡尾酒疗法</span>
+                        <span class="prof-tag">抗病毒</span>
+                    </div>
+                </div>
+            </div>
+            <div class="prof-card-body">
+                <div class="key-points">
+                    <h4>🔬 核心成就</h4>
+                    <div class="point-item" style="border-color: var(--accent-8);">
+                        <div class="point-icon">💊</div>
+                        <div class="point-content">
+                            <h5>鸡尾酒疗法(HAART)：多药联合抗病毒</h5>
+                            <p>将多种抗病毒药物组合，从"单一攻击"变为"多重防线"，大幅延长AIDS患者寿命。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-8);">
+                        <div class="point-icon">🧬</div>
+                        <div class="point-content">
+                            <h5>HIV复制机制研究</h5>
+                            <p>揭示HIV如何在细胞内复制，为抗病毒药物设计提供关键靶点。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-8);">
+                        <div class="point-icon">🦠</div>
+                        <div class="point-content">
+                            <h5>终身抗病毒治疗</h5>
+                            <p>鸡尾酒疗法让HIV从"致命杀手"变为可控的慢性病，患者可活到正常寿命。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-8);">
+                        <div class="point-icon">🏥</div>
+                        <div class="point-content">
+                            <h5>新发疫情应对</h5>
+                            <p>基于抗病毒经验，参与SARS-CoV-2的研究，为全球疫情应对提供科学支撑。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="metaphor-box" style="border-color: var(--accent-8); background: linear-gradient(135deg, rgba(162,155,254,0.15), rgba(255,255,255,0.02));">
+                    <h4>🎯 比喻</h4>
+                    <p>「HIV = 狡猾的间谍，擅长躲避免疫系统。鸡尾酒疗法 = 同时派出多支特种部队，从不同角度围堵，让病毒无处可逃。」</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 林海帆 -->
+    <section class="section" id="linhf">
+        <div class="section-header">
+            <div class="section-num" style="background: var(--accent-9);">9</div>
+            <div class="section-title">
+                <h2>林海帆 · 干细胞与再生医学</h2>
+                <div class="subtitle">耶鲁大学 · 耶鲁干细胞中心主任</div>
+            </div>
+        </div>
+        <div class="prof-card color-9">
+            <div class="prof-card-header">
+                <div class="prof-avatar" style="background: var(--accent-9);">🔬</div>
+                <div class="prof-info">
+                    <h3>林海帆</h3>
+                    <div class="affiliation">耶鲁大学 · 耶鲁干细胞中心</div>
+                    <div class="prof-tags">
+                        <span class="prof-tag">干细胞</span>
+                        <span class="prof-tag">iPSC</span>
+                        <span class="prof-tag">再生医学</span>
+                    </div>
+                </div>
+            </div>
+            <div class="prof-card-body">
+                <div class="key-points">
+                    <h4>🔬 核心概念</h4>
+                    <div class="point-item" style="border-color: var(--accent-9);">
+                        <div class="point-icon">🔬</div>
+                        <div class="point-content">
+                            <h5>干细胞分类</h5>
+                            <p>胚胎干细胞、神经干细胞、组织干细胞——不同类型的干细胞有不同分化潜能。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-9);">
+                        <div class="point-icon">🧪</div>
+                        <div class="point-content">
+                            <h5>iPSC：诱导多能干细胞</h5>
+                            <p>用成体细胞"重编程"为干细胞——你的皮肤细胞可以变成任何器官的细胞。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-9);">
+                        <div class="point-icon">🏥</div>
+                        <div class="point-content">
+                            <h5>临床应用</h5>
+                            <p>帕金森病细胞治疗、人工肺/血管、脊髓损伤修复——用细胞替换受损组织。</p>
+                        </div>
+                    </div>
+                    <div class="point-item" style="border-color: var(--accent-9);">
+                        <div class="point-icon">🧬</div>
+                        <div class="point-content">
+                            <h5>耶鲁干细胞中心</h5>
+                            <p>105位跨学科教授，涵盖遗传学、神经科、心血管等，从基础研究到临床转化。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="metaphor-box" style="border-color: var(--accent-9); background: linear-gradient(135deg, rgba(253,121,168,0.15), rgba(255,255,255,0.02));">
+                    <h4>🎯 比喻</h4>
+                    <p>「干细胞 = 身体的'原始种子'。iPSC = 把成年细胞'返老还童'变回种子。再生医学 = 让种子长成需要替换的器官组织。」</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Knowledge Network -->
+    <section class="network-section" id="network">
+        <div class="network-title">
+            <h2>🕸️ 知识网络图</h2>
+            <p>九位科学家研究之间的逻辑关系</p>
+        </div>
+
+        <div class="layer">
+            <div class="layer-title">🏗️ 底层：基因与调控</div>
+            <div class="layer-nodes">
+                <div class="net-node" style="--node-color: var(--accent-6);">
+                    <div class="icon">✂️</div>
+                    <h4>Marraffini</h4>
+                    <p>CRISPR · 基因编辑</p>
+                </div>
+                <div class="net-node" style="--node-color: var(--accent-3);">
+                    <div class="icon">📊</div>
+                    <h4>林希虹</h4>
+                    <p>WGS · PRS · Biobank</p>
+                </div>
+                <div class="net-node" style="--node-color: var(--accent-7);">
+                    <div class="icon">⏰</div>
+                    <h4>Ruvkun</h4>
+                    <p>microRNA · 发育时序</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="layer">
+            <div class="layer-title">🧱 中层：细胞与系统</div>
+            <div class="layer-nodes">
+                <div class="net-node" style="--node-color: var(--accent-1);">
+                    <div class="icon">🍖</div>
+                    <h4>Friedman</h4>
+                    <p>Leptin · 代谢</p>
+                </div>
+                <div class="net-node" style="--node-color: var(--accent-4);">
+                    <div class="icon">💊</div>
+                    <h4>Langer</h4>
+                    <p>药物递送</p>
+                </div>
+                <div class="net-node" style="--node-color: var(--accent-5);">
+                    <div class="icon">🧠</div>
+                    <h4>Sheng</h4>
+                    <p>突触 · 神经回路</p>
+                </div>
+                <div class="net-node" style="--node-color: var(--accent-9);">
+                    <div class="icon">🔬</div>
+                    <h4>林海帆</h4>
+                    <p>干细胞 · 再生</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="layer">
+            <div class="layer-title">🏠 顶层：整体与临床</div>
+            <div class="layer-nodes">
+                <div class="net-node" style="--node-color: var(--accent-2);">
+                    <div class="icon">👁️</div>
+                    <h4>Desimone</h4>
+                    <p>注意力 · AI</p>
+                </div>
+                <div class="net-node" style="--node-color: var(--accent-8);">
+                    <div class="icon">🦠</div>
+                    <h4>David Ho</h4>
+                    <p>HIV · 疫情</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="conn-list">
+            <h3 style="text-align: center; margin-bottom: 24px; font-size: 1.1rem;">🔗 跨领域蝴蝶效应</h3>
+            <div class="conn-item">
+                <div class="conn-from"><h5>从</h5><div class="name" style="color: var(--accent-6);">Marraffini</div></div>
+                <div class="conn-arrow">→</div>
+                <div class="conn-to"><h5>到</h5><div class="name" style="color: var(--accent-1);">Friedman</div></div>
+                <div class="conn-label">CRISPR可以编辑Leptin基因，从基因层面"修复"饱腹信号系统</div>
+            </div>
+            <div class="conn-item">
+                <div class="conn-from"><h5>从</h5><div class="name" style="color: var(--accent-3);">林希虹</div></div>
+                <div class="conn-arrow">→</div>
+                <div class="conn-to"><h5>到</h5><div class="name" style="color: var(--accent-4);">Langer</div></div>
+                <div class="conn-label">Biobank数据驱动精准药物设计，为特定基因突变人群定制靶向药</div>
+            </div>
+            <div class="conn-item">
+                <div class="conn-from"><h5>从</h5><div class="name" style="color: var(--accent-5);">Sheng</div></div>
+                <div class="conn-arrow">→</div>
+                <div class="conn-to"><h5>到</h5><div class="name" style="color: var(--accent-2);">Desimone</div></div>
+                <div class="conn-label">突触可塑性是注意力的基础——强化哪些突触决定聚光灯照向哪里</div>
+            </div>
+            <div class="conn-item">
+                <div class="conn-from"><h5>从</h5><div class="name" style="color: var(--accent-7);">Ruvkun</div></div>
+                <div class="conn-arrow">→</div>
+                <div class="conn-to"><h5>到</h5><div class="name" style="color: var(--accent-1);">Friedman</div></div>
+                <div class="conn-label">microRNA调控代谢相关基因表达，影响食欲和能量平衡</div>
+            </div>
+            <div class="conn-item">
+                <div class="conn-from"><h5>从</h5><div class="name" style="color: var(--accent-9);">林海帆</div></div>
+                <div class="conn-arrow">→</div>
+                <div class="conn-to"><h5>到</h5><div class="name" style="color: var(--accent-8);">David Ho</div></div>
+                <div class="conn-label">iPSC技术可用于体外研究病毒感染机制，或培养免疫细胞</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Three Layers Summary -->
+    <section style="max-width: 1000px; margin: 0 auto; padding: 60px 20px;">
+        <h2 style="text-align: center; font-size: 1.8rem; margin-bottom: 30px;">🎯 生命科学的三个终极问题</h2>
+        <div class="three-layers">
+            <div class="layer-card" style="border-color: var(--accent-6);">
+                <h4 style="color: var(--accent-6);">🧬 "我是谁？"</h4>
+                <p>基因编码了一切可能性</p>
+                <div class="scientists">Marraffini + 林希虹 + Ruvkun</div>
+            </div>
+            <div class="layer-card" style="border-color: var(--accent-4);">
+                <h4 style="color: var(--accent-4);">🧫 "我如何运作？"</h4>
+                <p>细胞和系统层面的机制</p>
+                <div class="scientists">Friedman + Langer + Sheng + 林海帆</div>
+            </div>
+            <div class="layer-card" style="border-color: var(--accent-8);">
+                <h4 style="color: var(--accent-8);">🏥 "我如何被治愈？"</h4>
+                <p>从基础到临床的转化</p>
+                <div class="scientists">Desimone + David Ho</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>GASA Boston-NYC 2026 · 九位科学家完整课程</p>
+        <p style="margin-top: 8px;">从基因到临床 · 生命科学的星辰大海</p>
+        <p style="margin-top: 16px; font-size: 0.8rem;">🧬 祝学习愉快！</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+</html>
