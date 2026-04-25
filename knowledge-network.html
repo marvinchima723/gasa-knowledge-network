@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GASA 知识宇宙 - 生命科学的星辰大海</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0e17;
+            --bg-card: #111827;
+            --accent-1: #FF6B6B;
+            --accent-2: #4ECDC4;
+            --accent-3: #FFE66D;
+            --accent-4: #95E1D3;
+            --accent-5: #F38181;
+            --accent-6: #AA96DA;
+            --text-primary: #F8F8F2;
+            --text-secondary: #A0AEC0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans SC', -apple-system, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .hero {
+            text-align: center;
+            padding: 80px 20px 40px;
+            background: linear-gradient(180deg, rgba(170,150,218,0.15) 0%, transparent 100%);
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--accent-6));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        .metaphor-intro {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(78,205,196,0.1), rgba(170,150,218,0.1));
+            border-radius: 24px;
+            border: 1px solid rgba(78,205,196,0.3);
+        }
+        .metaphor-intro h2 {
+            font-size: 1.8rem;
+            color: var(--accent-2);
+            margin-bottom: 20px;
+        }
+        .metaphor-intro p {
+            font-size: 1.15rem;
+            line-height: 2;
+            color: var(--text-primary);
+        }
+        .highlight { background: linear-gradient(120deg, rgba(255,107,107,0.3), rgba(255,230,109,0.3)); padding: 2px 8px; border-radius: 4px; }
+        .color-1 { --node-color: #FF6B6B; --node-glow: rgba(255,107,107,0.2); }
+        .color-2 { --node-color: #4ECDC4; --node-glow: rgba(78,205,196,0.2); }
+        .color-3 { --node-color: #FFE66D; --node-glow: rgba(255,230,109,0.2); }
+        .color-4 { --node-color: #95E1D3; --node-glow: rgba(149,225,211,0.2); }
+        .color-5 { --node-color: #F38181; --node-glow: rgba(243,129,129,0.2); }
+        .color-6 { --node-color: #AA96DA; --node-glow: rgba(170,150,218,0.2); }
+        .network-container { position: relative; width: 100%; max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
+        .connection-diagram { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin: 40px auto; max-width: 1200px; }
+        .professor-node {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 28px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .professor-node::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--node-color); }
+        .professor-node:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+        .node-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+        .node-icon { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; background: var(--node-color); }
+        .node-title { flex: 1; }
+        .node-title h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+        .node-title span { font-size: 0.85rem; color: var(--text-secondary); }
+        .node-concept { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+        .node-concept .label { font-size: 0.75rem; color: var(--node-color); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+        .node-concept p { font-size: 0.95rem; line-height: 1.7; color: var(--text-secondary); }
+        .metaphor-box { background: linear-gradient(135deg, var(--node-glow), transparent); border-radius: 12px; padding: 16px; border-left: 3px solid var(--node-color); }
+        .metaphor-box .emoji { font-size: 1.4rem; margin-bottom: 8px; }
+        .metaphor-box p { font-size: 0.9rem; color: var(--text-primary); font-style: italic; line-height: 1.6; }
+        .connections-section { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
+        .connections-section h2 { font-size: 2rem; text-align: center; margin-bottom: 50px; }
+        .connection-card { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 30px; background: var(--bg-card); border-radius: 20px; padding: 30px; margin-bottom: 24px; border: 1px solid rgba(255,255,255,0.08); }
+        .connection-from, .connection-to { padding: 20px; border-radius: 16px; background: rgba(255,255,255,0.03); }
+        .connection-from h4, .connection-to h4 { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px; }
+        .connection-from .name, .connection-to .name { font-size: 1.1rem; font-weight: 700; }
+        .connection-arrow { font-size: 2rem; color: var(--accent-2); }
+        .connection-desc { grid-column: 1 / -1; padding: 20px; background: rgba(78,205,196,0.08); border-radius: 12px; display: flex; align-items: flex-start; gap: 16px; }
+        .connection-desc .icon { font-size: 1.8rem; flex-shrink: 0; }
+        .connection-desc p { line-height: 1.8; color: var(--text-primary); }
+        .journey-section { max-width: 1000px; margin: 80px auto; padding: 60px 40px; background: linear-gradient(135deg, rgba(255,107,107,0.1), rgba(78,205,196,0.1)); border-radius: 32px; text-align: center; }
+        .journey-section h2 { font-size: 2.2rem; margin-bottom: 30px; background: linear-gradient(135deg, var(--accent-1), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .journey-flow { display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; margin: 40px 0; }
+        .journey-step { background: var(--bg-card); padding: 20px 28px; border-radius: 16px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
+        .journey-step .num { font-size: 2rem; font-weight: 900; margin-bottom: 8px; }
+        .journey-step .desc { font-size: 0.9rem; color: var(--text-secondary); }
+        .journey-arrow { font-size: 2rem; color: var(--accent-2); }
+        .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 24px; margin-top: 60px; }
+        .summary-card { background: var(--bg-card); border-radius: 20px; padding: 28px; border: 1px solid rgba(255,255,255,0.08); }
+        .summary-card h4 { font-size: 1.2rem; margin-bottom: 16px; }
+        .summary-card ul { list-style: none; }
+        .summary-card li { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-secondary); font-size: 0.95rem; display: flex; align-items: flex-start; gap: 10px; }
+        .summary-card li:last-child { border-bottom: none; }
+        .summary-card li::before { content: '✦'; color: var(--accent-2); flex-shrink: 0; }
+        .universe-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; background: radial-gradient(ellipse at 20% 20%, rgba(170,150,218,0.08) 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, rgba(78,205,196,0.08) 0%, transparent 50%); }
+        @media (max-width: 900px) {
+            .connection-diagram { grid-template-columns: 1fr; }
+            .connection-card { grid-template-columns: 1fr; }
+            .connection-arrow { transform: rotate(90deg); text-align: center; }
+            .hero h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="universe-bg"></div>
+    <section class="hero">
+        <h1>GASA 知识宇宙</h1>
+        <p>从基因到意识 · 六位科学家的星辰大海<br>用比喻看懂生命科学的完整地图</p>
+    </section>
+
+    <div class="metaphor-intro">
+        <h2>🧬 生命科学的「城市比喻」</h2>
+        <p>想象你的身体是一座 <span class="highlight">「智慧城市」</span>：</p>
+        <p style="margin-top: 16px;">
+            🧬 <strong>基因组</strong> = 城市的完整蓝图（藏在你每个细胞的核心里）<br>
+            🧪 <strong>蛋白质/基因编辑</strong> = 蓝图的具体施工指令（Marraffini的CRISPR是精准装修队）<br>
+            🧠 <strong>神经科学</strong> = 城市的通信网络和指挥中心（Sheng的突触=网线，Desimone的注意力=路由器）<br>
+            🔬 <strong>代谢与激素</strong> = 城市的能源系统和物流（Langer的药物递送=快递公司，Friedman的Leptin=饥饿警报器）<br>
+            📊 <strong>统计学习</strong> = 城市规划局的智能分析系统（林希虹的AI+统计=超级城市规划AI）
+        </p>
+    </div>
+
+    <section class="network-container">
+        <div class="connection-diagram">
+            <div class="professor-node color-1">
+                <div class="node-header">
+                    <div class="node-icon">🍖</div>
+                    <div class="node-title">
+                        <h3>Jeffrey Friedman</h3>
+                        <span>洛克菲勒大学</span>
+                    </div>
+                </div>
+                <div class="node-concept">
+                    <div class="label">核心概念</div>
+                    <p><strong>Leptin（瘦素）</strong> = 身体的「饱腹警报器」<br><br>
+                    脂肪细胞分泌，告诉大脑「能量充足，别吃了」<br>
+                    VMH（丘脑腹内侧核）= 饥饿控制的「总部」</p>
+                </div>
+                <div class="metaphor-box">
+                    <div class="emoji">🏠</div>
+                    <p>「就像家里的烟雾报警器——脂肪=火灾，Leptin=警报声，告诉你'够热了，别再加柴了'」</p>
+                </div>
+            </div>
+
+            <div class="professor-node color-2">
+                <div class="node-header">
+                    <div class="node-icon">📊</div>
+                    <div class="node-title">
+                        <h3>林希虹</h3>
+                        <span>哈佛大学 · 统计遗传学</span>
+                    </div>
+                </div>
+                <div class="node-concept">
+                    <div class="label">核心概念</div>
+                    <p><strong>WGS + PRS</strong> = 基因组的「全息扫描」<br><br>
+                    全基因组测序 + 多基因风险评分<br>
+                    Biobank = 百万人的「基因大数据银行」</p>
+                </div>
+                <div class="metaphor-box">
+                    <div class="emoji">🏦</div>
+                    <p>「就像Google地图同时显示：你的基因户籍、人口流量、房价趋势——预测你未来10年会在哪里'堵车'」</p>
+                </div>
+            </div>
+
+            <div class="professor-node color-3">
+                <div class="node-header">
+                    <div class="node-icon">💊</div>
+                    <div class="node-title">
+                        <h3>Robert Langer</h3>
+                        <span>MIT · 药物递送之父</span>
+                    </div>
+                </div>
+                <div class="node-concept">
+                    <div class="label">核心概念</div>
+                    <p><strong>药物递送</strong> = 精准的「快递系统」<br><br>
+                    纳米颗粒、聚合物植入物、血管抑制<br>
+                    组织工程 = 再生医学的「3D打印」</p>
+                </div>
+                <div class="metaphor-box">
+                    <div class="emoji">📦</div>
+                    <p>「想象给城市送快递——以前是乱扔包裹，现在有了GPS导航+智能分拣，精准送达每个家庭（细胞）」</p>
+                </div>
+            </div>
+
+            <div class="professor-node color-4">
+                <div class="node-header">
+                    <div class="node-icon">🧠</div>
+                    <div class="node-title">
+                        <h3>Morgan Sheng</h3>
+                        <span>MIT · 神经科学家</span>
+                    </div>
+                </div>
+                <div class="node-concept">
+                    <div class="label">核心概念</div>
+                    <p><strong>突触</strong> = 大脑的「信息高速公路」<br><br>
+                    神经元之间的连接点<br>
+                    神经胶质细胞 = 神经网络的「后勤保障队」</p>
+                </div>
+                <div class="metaphor-box">
+                    <div class="emoji">🖥️</div>
+                    <p>「就像互联网的网线——每个突触是光纤连接点，神经胶质细胞是维护光缆的工程师」</p>
+                </div>
+            </div>
+
+            <div class="professor-node color-5">
+                <div class="node-header">
+                    <div class="node-icon">✂️</div>
+                    <div class="node-title">
+                        <h3>Luciano Marraffini</h3>
+                        <span>Rockefeller · CRISPR先驱</span>
+                    </div>
+                </div>
+                <div class="node-concept">
+                    <div class="label">核心概念</div>
+                    <p><strong>CRISPR-Cas</strong> = 基因组的「精准剪刀」<br><br>
+                    细菌的获得性免疫系统<br>
+                    Cas9 = 定位+切割的「分子手术刀」</p>
+                </div>
+                <div class="metaphor-box">
+                    <div class="emoji">✂️</div>
+                    <p>「就像Word的'查找替换'——找出错误的字（基因突变），精确剪掉，粘贴正确的内容」</p>
+                </div>
+            </div>
+
+            <div class="professor-node color-6">
+                <div class="node-header">
+                    <div class="node-icon">👁️</div>
+                    <div class="node-title">
+                        <h3>Robert Desimone</h3>
+                        <span>MIT McGovern研究所</span>
+                    </div>
+                </div>
+                <div class="node-concept">
+                    <div class="label">核心概念</div>
+                    <p><strong>注意力网络</strong> = 大脑的「聚光灯」<br><br>
+                    视觉系统的信息筛选<br>
+                    颞叶 = 物体的「身份证识别系统」</p>
+                </div>
+                <div class="metaphor-box">
+                    <div class="emoji">🔦</div>
+                    <p>「就像在嘈杂的派对上找朋友——你的注意力是聚光灯，大脑是主持人，帮你从噪音中筛选出目标」</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="connections-section">
+        <h2>🔗 知识之间的「蝴蝶效应」</h2>
+
+        <div class="connection-card">
+            <div class="connection-from">
+                <h4>从</h4>
+                <div class="name" style="color: var(--accent-5);">🧬 Marraffini的CRISPR</div>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;">精准编辑基因</p>
+            </div>
+            <div class="connection-arrow">➜</div>
+            <div class="connection-to">
+                <h4>到</h4>
+                <div class="name" style="color: var(--accent-1);">🍖 Friedman的Leptin</div>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;">治疗肥胖</p>
+            </div>
+            <div class="connection-desc">
+                <div class="icon">🔄</div>
+                <p><strong>蝴蝶效应：</strong>CRISPR可以精准修改「饱腹信号通路」中的关键基因——比如修改Leptin基因本身，或修改大脑中Leptin受体的基因。<br><br>
+                💡 <strong>想象：</strong>「你家的烟雾报警器坏了（Leptin抵抗），CRISPR可以直接帮你换一个新的！」</p>
+            </div>
+        </div>
+
+        <div class="connection-card">
+            <div class="connection-from">
+                <h4>从</h4>
+                <div class="name" style="color: var(--accent-2);">📊 林希虹的统计</div>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;">基因组大数据分析</p>
+            </div>
+            <div class="connection-arrow">➜</div>
+            <div class="connection-to">
+                <h4>到</h4>
+                <div class="name" style="color: var(--accent-1);">🍖 Friedman的代谢</div>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;">预测肥胖风险</p>
+            </div>
+            <div class="connection-desc">
+                <div class="icon">🔮</div>
+                <p><strong>蝴蝶效应：</strong>林希虹的PRS（多基因风险评分）可以计算某人在未来患肥胖或代谢疾病的风险——结合Friedman的Leptin研究，找出谁需要提前干预。<br><br>
+                💡 <strong>想象：</strong>「城市规划AI提前预测你家附近会'堵车'（代谢紊乱），提前派无人机送药！」</p>
+            </div>
+        </div>
+
+        <div class="connection-card">
+            <div class="connection-from">
+                <h4>从</h4>
+                <div class="name" style="color: var(--accent-3);">💊 Langer的药物递送</div>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;">精准递送系统</p>
+            </div>
+            <div class="connection-arrow">➜</div>
+            <div class="connection-to">
+                <h4>到</h4>
+                <div class="name" style="color: var(--accent-6);">🧠 Desimone的脑机接口</div>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;">神经调控</p>
+            </div>
+            <div class="connection-desc">
+                <div class="icon">🧠</div>
+                <p><strong>蝴蝶效应：</strong>Langer的纳米技术可以让药物穿越血脑屏障，直接递送到脑内特定区域——帮助Desimone的脑机接口研究实现「闭环神经调控」。<br><br>
+                💡 <strong>想象：</strong>「你的大脑是个安保严密的城堡（血脑屏障），Langer的纳米胶囊=特攻队，从内部打开城门！」</p>
+            </div>
+        </div>
+
+        <div class="connection-card">
+            <div class="connection-from">
+                <h4>从</h4>
+                <div class="name" style="color: var(--accent-4);">🧠 Sheng的突触研究</div>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;">神经网络可塑性</p>
+            </div>
+            <div class="connection-arrow">➜</div>
+            <div class="connection-to">
+                <h4>到</h4>
+                <div class="name" style="color: var(--accent-6);">👁️ Desimone的注意力</div>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;">认知控制</p>
+            </div>
+            <div class="connection-desc">
+                <div class="icon">🔗</div>
+                <p><strong>蝴蝶效应：</strong>Sheng揭示突触如何形成和修剪——这直接解释了Desimone研究的「注意力网络」如何通过强化特定突触连接来「聚焦」。<br><br>
+                💡 <strong>想象：</strong>「你的注意力就像Instagram的算法——不断强化点赞多的帖子（突触强化），隐藏不重要的内容（突触修剪）」</p>
+            </div>
+        </div>
+
+        <div class="connection-card">
+            <div class="connection-from">
+                <h4>从</h4>
+                <div class="name" style="color: var(--accent-2);">📊 林希虹的Biobank</div>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;">百万人基因数据库</p>
+            </div>
+            <div class="connection-arrow">➜</div>
+            <div class="connection-to">
+                <h4>到</h4>
+                <div class="name" style="color: var(--accent-3);">💊 Langer的新药研发</div>
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px;">精准药物设计</p>
+            </div>
+            <div class="connection-desc">
+                <div class="icon">🎯</div>
+                <p><strong>蝴蝶效应：</strong>Biobank数据能找出哪些基因突变会导致疾病——Langer的药物递送系统可以专门为这些「基因突变人群」设计靶向药物。<br><br>
+                💡 <strong>想象：</strong>「城市规划局的数据库说'这个区域（基因）有火灾隐患'——Langer的快递公司立刻派消防车（靶向药）去灭火！」</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="journey-section">
+        <h2>🚀 从基因到行为的「生命之旅」</h2>
+        <p style="font-size: 1.1rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 40px; line-height: 1.8;">
+            想象一个早餐后决定是否再吃一块蛋糕的你——生命科学如何解释这个简单的决定？
+        </p>
+
+        <div class="journey-flow">
+            <div class="journey-step" style="border: 2px solid var(--accent-5);">
+                <div class="num" style="color: var(--accent-5);">1</div>
+                <div class="desc"><strong>基因蓝图</strong><br><span style="font-size: 0.8rem;">Marraffini</span></div>
+            </div>
+            <div class="journey-arrow">→</div>
+            <div class="journey-step" style="border: 2px solid var(--accent-2);">
+                <div class="num" style="color: var(--accent-2);">2</div>
+                <div class="desc"><strong>大数据预测</strong><br><span style="font-size: 0.8rem;">林希虹</span></div>
+            </div>
+            <div class="journey-arrow">→</div>
+            <div class="journey-step" style="border: 2px solid var(--accent-1);">
+                <div class="num" style="color: var(--accent-1);">3</div>
+                <div class="desc"><strong>激素信号</strong><br><span style="font-size: 0.8rem;">Friedman</span></div>
+            </div>
+            <div class="journey-arrow">→</div>
+            <div class="journey-step" style="border: 2px solid var(--accent-4);">
+                <div class="num" style="color: var(--accent-4);">4</div>
+                <div class="desc"><strong>神经处理</strong><br><span style="font-size: 0.8rem;">Sheng</span></div>
+            </div>
+            <div class="journey-arrow">→</div>
+            <div class="journey-step" style="border: 2px solid var(--accent-6);">
+                <div class="num" style="color: var(--accent-6);">5</div>
+                <div class="desc"><strong>注意力聚焦</strong><br><span style="font-size: 0.8rem;">Desimone</span></div>
+            </div>
+            <div class="journey-arrow">→</div>
+            <div class="journey-step" style="border: 2px solid var(--accent-3);">
+                <div class="num" style="color: var(--accent-3);">6</div>
+                <div class="desc"><strong>最终决定</strong><br><span style="font-size: 0.8rem;">Langer的药？</span></div>
+            </div>
+        </div>
+
+        <div style="text-align: left; max-width: 800px; margin: 40px auto 0; background: var(--bg-card); padding: 30px; border-radius: 20px;">
+            <h4 style="color: var(--accent-2); margin-bottom: 16px;">📖 完整故事：</h4>
+            <p style="line-height: 2; color: var(--text-primary);">
+                <strong>第一步：</strong>你的基因蓝图（Marraffini研究）决定了你天生对甜食的敏感度。<br><br>
+                <strong>第二步：</strong>林希虹的Biobank数据显示，你携带了3个「贪吃基因」变异位点，多基因风险评分(PRS)偏高。<br><br>
+                <strong>第三步：</strong>早餐后，你的脂肪细胞释放Leptin（Friedman发现）——「能量充足，别吃了」的信号。<br><br>
+                <strong>第四步：</strong>但突触连接（Sheng研究）显示你大脑的「奖赏系统」和「自控系统」正在拉锯战。<br><br>
+                <strong>第五步：</strong>Desimone的注意力网络帮你「聚焦」——你注意到了蛋糕，然后...<br><br>
+                <strong>未来干预：</strong>Langer的「饱腹感纳米药丸」可以在这个关键时刻精准释放Leptin，帮你做出选择！
+            </p>
+        </div>
+    </section>
+
+    <section style="max-width: 1200px; margin: 80px auto; padding: 0 20px;">
+        <h2 style="text-align: center; margin-bottom: 40px;">💡 六位科学家的「智慧精华」</h2>
+        <div class="summary-grid">
+            <div class="summary-card" style="border-top: 3px solid var(--accent-1);">
+                <h4>🍖 Jeffrey Friedman <span style="font-size: 0.8rem; color: var(--text-secondary);">—— 身体的秤</span></h4>
+                <ul>
+                    <li>Leptin = 脂肪分泌的「饱腹激素」，像汽车的「油量表」</li>
+                    <li>VMH = 大脑的「饥饿总部」，损坏会导致暴食</li>
+                    <li>肥胖的本质 = Leptin抵抗 = 「报警器失灵」</li>
+                    <li>Me5神经回路 = 控制「吃还是不吃」的线路</li>
+                    <li>BDNF = 神经元的「肥料」，缺乏导致代谢问题</li>
+                </ul>
+            </div>
+            <div class="summary-card" style="border-top: 3px solid var(--accent-2);">
+                <h4>📊 林希虹 <span style="font-size: 0.8rem; color: var(--text-secondary);">—— 预测未来</span></h4>
+                <ul>
+                    <li>全基因组测序(WGS) = 完整的「人体说明书」</li>
+                    <li>PRS = 把100万个基因位点简化成「健康评分卡」</li>
+                    <li>UK Biobank = 50万人的「基因大数据金库」</li>
+                    <li>AI + 统计 = 从数据中发现隐藏的「健康规律」</li>
+                    <li>精准医学 = 「因材施教」式的健康管理</li>
+                </ul>
+            </div>
+            <div class="summary-card" style="border-top: 3px solid var(--accent-3);">
+                <h4>💊 Robert Langer <span style="font-size: 0.8rem; color: var(--text-secondary);">—— 精准快递</span></h4>
+                <ul>
+                    <li>药物递送 = 让药「准时快递」到目的地</li>
+                    <li>纳米颗粒 = 比细胞还小的「快递包装」</li>
+                    <li>血管抑制治疗 = 「断敌粮草」的抗癌策略</li>
+                    <li>组织工程 = 用3D打印「制造器官」</li>
+                    <li>大分子口服 = 让胰岛素「穿盔甲」过胃酸</li>
+                </ul>
+            </div>
+            <div class="summary-card" style="border-top: 3px solid var(--accent-4);">
+                <h4>🧠 Morgan Sheng <span style="font-size: 0.8rem; color: var(--text-secondary);">—— 神经网络</span></h4>
+                <ul>
+                    <li>突触 = 神经元之间的「网线接口」</li>
+                    <li>海马体 = 大脑的「GPS + 记忆硬盘」</li>
+                    <li>神经胶质细胞 = 神经网络的「后勤+环卫」</li>
+                    <li>突触可塑性 = 大脑「重编程」的能力</li>
+                    <li>神经回路 = 完成特定任务的「专用线路」</li>
+                </ul>
+            </div>
+            <div class="summary-card" style="border-top: 3px solid var(--accent-5);">
+                <h4>✂️ Luciano Marraffini <span style="font-size: 0.8rem; color: var(--text-secondary);">—— 基因手术</span></h4>
+                <ul>
+                    <li>CRISPR = 细菌的「免疫记忆系统」</li>
+                    <li>Cas9 = 精准的「基因剪刀」</li>
+                    <li>sgRNA = 剪刀的「GPS导航」</li>
+                    <li>基因驱动 = 让某种基因「传染」给整个种群</li>
+                    <li>基因治疗 = 直接修改「病因基因」</li>
+                </ul>
+            </div>
+            <div class="summary-card" style="border-top: 3px solid var(--accent-6);">
+                <h4>👁️ Robert Desimone <span style="font-size: 0.8rem; color: var(--text-secondary);">—— 聚光灯</span></h4>
+                <ul>
+                    <li>注意力 = 大脑的「聚光灯效应」</li>
+                    <li>腹侧通路 = 「这是什么」（物体识别）</li>
+                    <li>背侧通路 = 「在哪里」（空间位置）</li>
+                    <li>前额叶 = 「指挥官」，负责控制注意力</li>
+                    <li>McGovern研究所 = MIT的「脑科学旗舰」</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section style="text-align: center; padding: 80px 20px; background: linear-gradient(180deg, transparent, rgba(170,150,218,0.1));">
+        <h2 style="font-size: 1.8rem; margin-bottom: 20px;">🎯 核心洞见：生命科学的「三层楼」</h2>
+        <div style="max-width: 800px; margin: 0 auto; text-align: left;">
+            <div style="background: var(--bg-card); padding: 30px; border-radius: 20px; margin-bottom: 20px; border-left: 4px solid var(--accent-5);">
+                <h4 style="color: var(--accent-5); margin-bottom: 10px;">🏗️ 地基：基因组（Marraffini + 林希虹）</h4>
+                <p style="color: var(--text-secondary); line-height: 1.8;">「基因是生命的源代码——CRISPR是编辑器，统计是编译器」</p>
+            </div>
+            <div style="background: var(--bg-card); padding: 30px; border-radius: 20px; margin-bottom: 20px; border-left: 4px solid var(--accent-4);">
+                <h4 style="color: var(--accent-4); margin-bottom: 10px;">🧱 楼层：细胞与系统（Friedman + Langer + Sheng）</h4>
+                <p style="color: var(--text-secondary); line-height: 1.8;">「激素是通信网络，药物递送是物流公司，突触是互联网光缆」</p>
+            </div>
+            <div style="background: var(--bg-card); padding: 30px; border-radius: 20px; border-left: 4px solid var(--accent-6);">
+                <h4 style="color: var(--accent-6); margin-bottom: 10px;">🏠 屋顶：意识与行为（Desimone）</h4>
+                <p style="color: var(--text-secondary); line-height: 1.8;">「注意力是心灵的聚光灯，让我们从信息洪流中选中最重要的」</p>
+            </div>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 60px 20px; color: var(--text-secondary);">
+        <p>GASA Boston-NYC 2026 · 知识网络图 · 用比喻看懂科学</p>
+        <p style="margin-top: 10px;">🧬 从基因到意识，科学的终极问题是：「我们是谁？」</p>
+    </footer>
+</body>
+</html>
